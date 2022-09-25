@@ -41,7 +41,7 @@ public class SPLGauss {
 
     static void gauss(Matrix m) {
         int i, j, k;
-        float ratio, determinan;
+        float ratio;
     
         if (!segi3Bawah(m)) {
             for (i = 0; i <= m.getLastIdxRow(); i++) {
@@ -59,7 +59,7 @@ public class SPLGauss {
 
     static void gaussJordan(Matrix m) {
         int i, j, k;
-        float ratio, determinan;
+        float ratio;
     
         if (!segi3Bawah(m)) {
             for (i = 0; i <= m.getLastIdxRow(); i++) {
