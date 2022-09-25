@@ -2,7 +2,7 @@ public class SPLGauss {
     static boolean segi3Bawah(Matrix m) {
         int i, j;
 
-        if (m.getLastIdxRow() > 1) {
+        if (m.getLastIdxRow() >= 1) {
             for (i = 1; i <= m.getLastIdxRow(); i++) {
                 for (j = 0; j < i; j++) {
                     if (m.getElmt(i, j) != 0) {
@@ -10,7 +10,7 @@ public class SPLGauss {
                     }
                 }
             }
-        } else if (m.getLastIdxRow() == 1) {
+        } else if (m.getLastIdxRow() == 0) {
             return true;
         } else {
             return false;
@@ -24,13 +24,13 @@ public class SPLGauss {
     
         if (m.getLastIdxRow() >= 1) {
             for (i = 0; i <= m.getLastIdxRow()-1; i++) {
-                for (j = i+1; j < m.getLastIdxCol(); j++) {
+                for (j = i+1; j <= m.getLastIdxCol(); j++) {
                     if (m.getElmt(i, j) != 0) {
                         return false;
                     }
                 }
             }
-        } else if (m.getLastIdxRow() == 1) {
+        } else if (m.getLastIdxRow() == 0) {
             return true;
         } else {
             return false;
@@ -61,18 +61,7 @@ public class SPLGauss {
         int i, j, k;
         float ratio;
     
-        if (!segi3Bawah(m)) {
-            for (i = 0; i <= m.getLastIdxRow(); i++) {
-                for (j = 0; j <= m.getLastIdxCol(); j++) {
-                    if (j>i) {
-                        ratio = (float)m.getElmt(j, i) / m.getElmt(i, i);
-                        for (k = 0; k <= m.getLastIdxRow(); k++) {
-                            m.setElmt(j, k, m.getElmt(j, k) - (m.getElmt(i, k)) * ratio);
-                        }
-                    } 
-                }
-            }
-        }
+        gauss(m);
     
         if (!segi3Atas(m)) {
             for (i = m.getLastIdxRow(); i >= 0; i--) {
@@ -87,4 +76,5 @@ public class SPLGauss {
             }
         }
     }
+
 }
