@@ -29,4 +29,8 @@ public class Matrix {
     public void setElmt(int i, int j, float val) {
         this.mem[i][j] = val;
     }
+
+    public int NbElmt() {
+        return (this.rowEff * this.colEff);
+    }
 }
