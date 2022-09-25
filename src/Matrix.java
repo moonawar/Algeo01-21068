@@ -1,4 +1,5 @@
 public class Matrix {
+    
     public int rowEff;
     public int colEff;
     public float[][] mem;

@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class MatrixOperations {
+    
     public Matrix readMatrix(){
         try (Scanner sc = new Scanner(System.in)) {
             int nRow, nCol;
@@ -28,5 +29,29 @@ public class MatrixOperations {
             }
             System.out.print("\n");
         }
+    }
+
+    public Matrix multiplyMatrix(Matrix m1, Matrix m2){
+        Matrix mOut = new Matrix(m1.rowEff, m2.colEff);
+
+        for (int i = 0; i <= mOut.getLastIdxRow(); i++) {
+            for (int j = 0; j <= mOut.getLastIdxCol(); j++) {
+                float sum = 0f;
+                for (int k = 0; k <= m1.getLastIdxCol(); k++)
+                    sum += m1.getElmt(i, k) * m2.getElmt(k, j); 
+                    
+                mOut.setElmt(i, j, sum);
+            } 
+        } 
+        
+        return mOut;
+    }
+
+    public Matrix IdentityMatrix(int size){
+        Matrix MIdentity = new Matrix(size, size);
+        for (int i = 0; i <= MIdentity.getLastIdxRow(); i++)
+            MIdentity.setElmt(i, i, 1.0f);
+
+        return MIdentity;
     }
 }
