@@ -2,13 +2,6 @@ public class Interpolation {
     SPLInverse splInverse = new SPLInverse();
     InverseMat inverse = new InverseMat();
     static MatrixOperations matOps = new MatrixOperations();
-    
-
-    public static void main(String[] args) {
-        Interpolation interpolation = new Interpolation();
-        Matrix mat = matOps.readMatrix();
-        interpolation.BicubicInterpolation(mat);
-    }
 
     public void PolinomInterpolation(int method){
         // int method will be used for choosing weather input is from file or from keyboard
