@@ -19,7 +19,7 @@ public class InverseMat {
                     k++;
                 }
                 
-                if (m.getElmt(j, k) < m.getElmt(j+1, k)) {
+                if (m.getElmt(j, k) == 0) {
                     swapRow(m, j, j+1);
                     swapRow(mAug, j, j+1);
                 }        
@@ -47,6 +47,7 @@ public class InverseMat {
                     mAug.setElmt(k, j, mAug.getElmt(k, j) - ratio * mAug.getElmt(i-1, j));
                 }
             }
+            sortRow(m, mAug);
         }
 
         // For each row, normalize the diagonal element to 1

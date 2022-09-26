@@ -1,25 +1,21 @@
-import java.util.Scanner;
-
 public class MatrixOperations {
     
     public Matrix readMatrix(){
-        try (Scanner sc = new Scanner(System.in)) {
-            int nRow, nCol;
-            System.out.printf("Enter the number of rows: ");
-            nRow = sc.nextInt();
-            System.out.printf("Enter the number of columns: ");
-            nCol = sc.nextInt();
+        int nRow, nCol;
+        System.out.printf("Enter the number of rows: ");
+        nRow = MainScanner.sc.nextInt();
+        System.out.printf("Enter the number of columns: ");
+        nCol = MainScanner.sc.nextInt();
 
-            Matrix m = new Matrix(nRow, nCol);
+        Matrix m = new Matrix(nRow, nCol);
 
-            for (int i = 0; i <= m.getLastIdxRow(); i++) {
-                for (int j = 0; j <= m.getLastIdxCol(); j++) {
-                    m.setElmt(i, j, sc.nextFloat());
-                }
+        for (int i = 0; i <= m.getLastIdxRow(); i++) {
+            for (int j = 0; j <= m.getLastIdxCol(); j++) {
+                m.setElmt(i, j, MainScanner.sc.nextFloat());
             }
-            
-            return m;
         }
+        return m;
+        
     }
 
     public void displayMatrix(Matrix m){
