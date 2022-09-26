@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Interpolation {
     SPLInverse splInverse = new SPLInverse();
     InverseMat inverse = new InverseMat();
@@ -12,13 +10,13 @@ public class Interpolation {
         interpolation.BicubicInterpolation(mat);
     }
 
-    public void PolinomInterpolation(int method, Scanner sc){
+    public void PolinomInterpolation(int method){
         // int method will be used for choosing weather input is from file or from keyboard
         // for now, input will only be from keyboard
         
 
         System.out.printf("Masukkan jumlah data poin: ");
-        int n = sc.nextInt();
+        int n = MainScanner.sc.nextInt();
         Matrix mData = new Matrix(n, 2);
         System.out.println("Masukkan masing-masing data poin format \"x y\":");
         for (int i = 0; i < n; i++) {
@@ -41,7 +39,7 @@ public class Interpolation {
         Matrix mX = splInverse.SPLWithInverse(mA, mB);
 
         System.out.printf("Masukkan x yang ingin ditaksir dengan interpolasi polinom: ");
-        float e = sc.nextFloat();
+        float e = MainScanner.sc.nextFloat();
 
         System.out.printf("Hasil interpolasi polinom \nf(x) = ");
         for (int i = mX.getLastIdxRow(); i >= 0; i--) {
