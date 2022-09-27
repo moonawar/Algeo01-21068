@@ -2,6 +2,11 @@ public class Regression {
     MatrixOperations matOps = new MatrixOperations();
     SPLInverse splInverse = new SPLInverse();
 
+    public static void main(String[] args) {
+        Regression regression = new Regression();
+        regression.MultipleLinearRegression(1);;
+    }
+
     public void MultipleLinearRegression(int method){
         System.out.printf("Masukkan jumlah variabel x: ");
         int n = MainScanner.sc.nextInt();
@@ -71,6 +76,27 @@ public class Regression {
 
         // Harusnya pake gauss
         Matrix mX = splInverse.SPLWithInverse(mEq, mSol);
-        matOps.displayMatrix(mX);
+        
+        System.out.println("Persamaan regresi:");
+        System.out.printf("f(x) = ");
+        for (int i = 0; i <= n; i++) {
+            if (i == 0) {
+                System.out.printf("%.4f + ", mX.getElmt(i, 0));
+            } else {
+                System.out.printf("%.4fx%d", mX.getElmt(i, 0), i);
+                if (i != n) {
+                    System.out.printf(" + ");
+                } 
+            }
+        }
+
+        System.out.println("\nMasukkan data yang ingin ditaksir");
+        float f_x = mX.getElmt(0, 0);
+        for (int i = 0; i < n; i++) {
+            System.out.printf("Masukkan nilai x%d: ", i+1);
+            f_x += MainScanner.sc.nextFloat() * mX.getElmt(i+1, 0);
+        }
+
+        System.out.printf("f(x-k) = %.4f", f_x);
     }
 }
