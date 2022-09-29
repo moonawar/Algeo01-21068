@@ -83,7 +83,7 @@ public class Interpolation {
             }
         }
 
-        Matrix XInverse = inverse.Inverse(X);
+        Matrix XInverse = inverse.InverseWithRed(X);
         Matrix a = matOps.multiplyMatrix(XInverse, y);
 
         row = 0;

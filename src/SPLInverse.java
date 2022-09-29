@@ -3,7 +3,7 @@ public class SPLInverse {
     MatrixOperations matOps = new MatrixOperations();
 
     public Matrix SPLWithInverse(Matrix mA, Matrix mB){
-        Matrix mInvA = inv.Inverse(mA);
+        Matrix mInvA = inv.InverseWithRed(mA);
         if (mInvA == null) {
             System.out.println("This matrix doesn't have an inverse matrix, thus the system of linear equations cannot be solved with this method");
             return null;

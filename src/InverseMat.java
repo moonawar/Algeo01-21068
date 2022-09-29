@@ -1,7 +1,14 @@
 public class InverseMat {
 
+
     // SPLGauss splGauss = new SPLGauss();
-    MatrixOperations matOps = new MatrixOperations();
+    static MatrixOperations matOps = new MatrixOperations();
+
+    public static void main(String[] args) {
+        InverseMat inverseMat = new InverseMat();
+        Matrix x = inverseMat.InverseWithAdjoin(matOps.readMatrix());
+        matOps.displayMatrix(x);
+    }
 
     private void swapRow(Matrix m, int row1, int row2){
         for (int i = 0; i <= m.getLastIdxCol(); i++) {
@@ -27,7 +34,7 @@ public class InverseMat {
         }
     }
 
-    public Matrix Inverse(Matrix m){
+    public Matrix InverseWithRed(Matrix m){
         // if (splGauss.gauss(m) == 0) {
         //     System.out.println("Inverse matrix doesn't exist");
         //     return m;
@@ -72,4 +79,89 @@ public class InverseMat {
         
         return mAug;
     } 
+
+    public Matrix MatCofactor(Matrix m){        
+        Matrix mOut = new Matrix(m.rowEff, m.colEff);
+        for (int i = 0; i <= m.getLastIdxRow(); i++) {
+            for (int j = 0; j <= m.getLastIdxCol(); j++) {
+                float minorDet = determinanCofactor(ExcludeRowCol(m, i, j));
+                float x;
+                if (minorDet == 0) {
+                    x = 0;
+                } else {
+                    x = (float) Math.pow(-1, i+j) * minorDet;
+                }
+                
+                mOut.setElmt(i, j, x);
+            }
+        }
+
+        return mOut;
+    }
+
+    public float determinanCofactor(Matrix m){
+        if (m.rowEff == 1) {
+            return m.getElmt(0, 0);
+        } else {
+            float det = 0;
+            for (int i = 0; i <= m.getLastIdxCol(); i++) {
+                det += Math.pow(-1, i) * m.getElmt(0, i) * determinanCofactor(ExcludeRowCol(m, 0, i));
+            }
+            return det;
+        }
+    }
+
+    public Matrix ExcludeRowCol(Matrix m, int row, int col){
+        Matrix mExclude = new Matrix(m.rowEff-1, m.colEff-1);
+        int i = 0;
+        int j = 0;
+        for (int k = 0; k <= m.getLastIdxRow(); k++) {
+            for (int l = 0; l <= m.getLastIdxCol(); l++) {
+                if ((k != row) && (l != col)) {
+                    mExclude.setElmt(i, j, m.getElmt(k, l));
+                    j++;
+                    if (j > mExclude.getLastIdxCol()) {
+                        j = 0;
+                        i++;
+                    }
+                }
+            }
+        }
+        return mExclude;
+    }
+
+    public Matrix transposeMat(Matrix m){
+        Matrix mTranspose = new Matrix(m.colEff, m.rowEff);
+        for (int i = 0; i <= m.getLastIdxRow(); i++) {
+            for (int j = 0; j <= m.getLastIdxCol(); j++) {
+                mTranspose.setElmt(j, i, m.getElmt(i, j));
+            }
+        }
+        return mTranspose;
+    }
+
+    public Matrix multiplyMatConst(Matrix m, float c){
+        Matrix mOut = new Matrix(m.rowEff, m.colEff);
+        
+        for (int i = 0; i <= m.getLastIdxRow(); i++) {
+            for (int j = 0; j <= m.getLastIdxCol(); j++) {
+                mOut.setElmt(i, j, m.getElmt(i, j)*c);
+            }
+        }
+        return mOut;
+    }
+
+    public Matrix InverseWithAdjoin(Matrix m){
+        Matrix mOut;
+        Matrix adjoin = transposeMat(MatCofactor(m));
+        if (determinanCofactor(m) == 0) {
+            System.out.println("Inverse matrix doesn't exist");
+            return null;
+        } else {
+            mOut = multiplyMatConst(adjoin, 1 / determinanCofactor(m));
+            return mOut;
+        }
+    }
+
+    
 }
