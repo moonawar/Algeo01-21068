@@ -1,40 +1,40 @@
-// public class DetCofactor {
-//     public double DetCofaktor(Matriks M) {
-//         /* Prekondisi: M bujur sangkar */
-//         /* Menghitung nilai determinan M */
-//         double det;
-    
-//         if ((M.Baris == 1) && (M.Kolom == 1)) // Basis 1x1
-//             det = M.Mat[0][0];
-//         else { // Rekurens nxn
-//             det = 0;
-//             for (int i = getFirstIdxBrs(M); i <= getLastIdxBrs(M); i++)
-//                 det += M.Mat[i][getFirstIdxKol(M)] * Cofaktor(M, i, getFirstIdxKol(M));
-//         }
-    
-//         return det;
-//     }
-    
-//     private double Cofaktor(Matriks M, int i, int j) {
-//         return DetCofaktor(Minor(M, i, j)) * (((i + j) % 2 == 0) ? 1 : -1);
-//     }
-    
-//     /* ********** MANIPULASI MATRIKS ********** */
-//     private Matriks Minor(Matriks M, int i, int j) {
-//         // Minor M(i,j) dari matriks M
-//         Matriks Minor = new Matriks(M.Baris - 1, M.Kolom - 1);
-//         int iMi, jMi, iM, jM;
-//         iMi = getFirstIdxBrs(Minor);
-//         for (iM = getFirstIdxBrs(M); iM <= getLastIdxBrs(M); iM++)
-//             if (iM != i) {
-//                 jMi = getFirstIdxKol(Minor);
-//                 for (jM = getFirstIdxKol(M); jM <= getLastIdxKol(M); jM++)
-//                     if (jM != j) {
-//                         Minor.Mat[iMi][jMi] = M.Mat[iM][jM];
-//                         jMi++;
-//                     }
-//                 iMi++;
-//             }
-//         return Minor;
-//     }
-// }
+public class DetCofactor {
+    public static void MatrixKecil(Matrix mat, Matrix cofac, int row, int col, int order){  
+               
+    int a = 0;  
+    int b = 0;  
+      
+    for (int i = 0; i < order; i++) { 
+            for (int j = 0; j < order; j++) {  
+                if (j != col && i != row) {  
+                    cofac.getElmt(a, b) = mat.getElmt(i, j);
+                    b++; 
+
+                    if (b == order - 1) {
+                        b = 0;
+                        a++;
+                    }
+                }  
+            }  
+          
+    }    
+}  
+            
+          
+    public static float DeterminanCofaktor(Matrix m,int order){
+    //2x2
+        if (order == 2){
+            return (m.getElmt(0, 0)*m.getElmt(1, 1))-(m.getElmt(0, 1)*m.getElmt(1, 0));
+        } else {
+            float res = 0;
+            Matrix cofac = new Matrix(order, order);
+            int sign = 1;
+            for (int i = 0; i < order; i++) {
+                MatrixKecil(m, cofac, 0, i, order);
+                res += sign * m.getElmt(0, i) * DeterminanCofaktor(cofac, order - 1);
+                sign = -sign;
+            }
+         return res;
+        }  
+    }
+}
