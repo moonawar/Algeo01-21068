@@ -1,6 +1,6 @@
 public class MatrixOperations {
     
-    public Matrix readMatrix(){
+    public static Matrix readMatrix(){
         int nRow, nCol;
         System.out.printf("Enter the number of rows: ");
         nRow = MainScanner.sc.nextInt();

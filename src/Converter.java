@@ -1,5 +1,7 @@
 import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.Scanner; // Import the Scanner class to read text files
 
 public class Converter {
@@ -103,6 +105,57 @@ public class Converter {
                 m1.setElmt(i, 0, m.getElmt(i, m.getLastIdxCol()));
             }
             return m1;
+        }
+    }
+
+    public static void saveFileMatrix(String filename, Matrix m) {
+        try {
+            int i, j;
+
+            File file = new File(filename);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileWriter write = new FileWriter(filename);
+            PrintWriter output = new PrintWriter(write);
+
+            for (i = 0; i <= m.getLastIdxRow(); ++i) {
+                for (j = 0; j <= m.getLastIdxRow(); ++j) {
+                    output.printf("%.2f ", m.getElmt(i, j));
+                }
+                output.printf("\n");
+            }
+
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveFileSPL(String filename, Solution sol, Matrix m) {
+        try {
+            int j;
+
+            File file = new File(filename);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileWriter write = new FileWriter(filename);
+            PrintWriter output = new PrintWriter(write);
+
+            if (sol.getState()) {
+                for (j = 0; j <= m.getLastIdxCol()-1; j++) {
+                    output.printf("x%d = %s\n", (j + 1), sol.getVar(j));
+                }
+            } else {
+                output.printf("SPL tersebut tidak miliki solusi\n");
+            }
+
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
