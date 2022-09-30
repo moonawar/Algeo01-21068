@@ -7,7 +7,7 @@ public class DetCofactor {
     for (int i = 0; i < order; i++) { 
             for (int j = 0; j < order; j++) {  
                 if (j != col && i != row) {  
-                    cofac.getElmt(a, b) = mat.getElmt(i, j);
+                    cofac.mem[a][b] = mat.getElmt(i, j);
                     b++; 
 
                     if (b == order - 1) {
