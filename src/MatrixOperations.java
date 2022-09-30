@@ -18,7 +18,7 @@ public class MatrixOperations {
         
     }
 
-    public void displayMatrix(Matrix m){
+    public static void displayMatrix(Matrix m){
         for (int i = 0; i <= m.getLastIdxRow(); i++) {
             for (int j = 0; j <= m.getLastIdxCol(); j++) {
                 System.out.printf("%.4f ", m.getElmt(i, j));

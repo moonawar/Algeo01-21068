@@ -4,38 +4,66 @@ import java.util.Scanner; // Import the Scanner class to read text files
 
 public class Converter {
     public static Matrix readTxt(String filename) throws FileNotFoundException{
-        // note jika membaca file untuk SPL, maka matrix yang dibaca akan disalin dalam bentuk augmented
+        int baris, kolom, j, tempASCII;
+        int[] size;
+        String[] elemen;
+        Matrix m;
+        char tempchar;
+        String temp;
 
-        // pre-read data agar tahu jumlah baris dan kolomnya yang pasti
-        int rows = 0;
-        int columns = 0;
+        size = prereadTxt(filename);
 
-        File file = new File(filename);
-        Scanner scan = new Scanner(file);
+        m = new Matrix(size[0], size[1]);
 
-        while (scan.hasNextLine()) {
-            ++rows;
-            Scanner colReader = new Scanner(scan.nextLine());
-            while(colReader.hasNextFloat()) {
-                ++columns;
-            }
-        }
-        scan.close();
+        if (size[0] >= 1) {
+            File myObj = new File(filename);
+            Scanner myReader = new Scanner(myObj);
+            
+            // pre read filenya biar tau ukuran matriks
+            baris = 0;
 
-        Matrix m = new Matrix(rows, columns);
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                elemen = data.split(" ");
 
-        //read data
-        scan = new Scanner(file);
-        for (int i = 0; i <= m.getLastIdxRow(); ++i) {
-            for (int j = 0; j <= m.getLastIdxCol(); ++j) {
-                if (scan.hasNextFloat()) {
-                    m.setElmt(i, j, scan.nextFloat());
+                for (j = 0; j <= elemen.length - 1; ++j) {
+                    m.setElmt(baris, j, Float.parseFloat(elemen[j]));
                 }
-            }
-        }
-        scan.close();
 
+                ++baris;
+            }
+            myReader.close();
+        }
+        
         return m;
+    }
+
+    public static int[] prereadTxt(String filename) throws FileNotFoundException{
+        int baris, kolom;
+        String[] elemen;
+        // baris, kolom
+        int[] size;
+        size = new int[2];
+
+        File myObj = new File(filename);
+        Scanner myReader = new Scanner(myObj);
+
+        baris = 0;
+
+        while (myReader.hasNextLine()) {
+            String data = myReader.nextLine();
+            elemen = data.split(" ");
+            if (baris == 0) {
+                kolom = elemen.length;
+                size[1] = kolom;
+            }
+            ++baris;
+        }
+
+        size[0] = baris;  
+        myReader.close();
+
+        return size;
     }
 
     public Matrix matrixToAugmented (Matrix a, Matrix b) {
