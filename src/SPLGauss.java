@@ -192,6 +192,52 @@ public class SPLGauss {
         return jumlahtidak0;
     }
 
+    public static String pengaliVar(String varString, Float x) {
+        // ASCII a-z : 97-122
+        // ASCII 0-9 : 48-57
+        // ASCII . : 46
+        // ASCII - : 45
+        int i, panjang, ctemp;
+        String temp, ctempstr;
+        float ctempfloat;
+        char c;
+
+        panjang = varString.length();
+        temp = "";
+        if (panjang == 1) {
+            temp = temp.concat(String.valueOf(x));
+            temp = temp.concat(varString);
+        } else {
+            i = 0;
+            ctempstr = "";
+            while (panjang - i >= 0) {
+                try {
+                    c = varString.charAt(i);
+                    ctemp = c;
+                    if ((ctemp >= 48 && ctemp <= 57) || ctemp == 46 || ctemp == 45) {
+                        ctempstr = ctempstr.concat(String.valueOf(c));
+                    } else if (ctemp == 43) {
+                        temp = temp.concat(" + ");
+                    } else {
+                        //jika variabel
+                        ctempfloat = Float.parseFloat(ctempstr);
+                        ctempfloat *= x;
+                        temp = temp.concat(String.valueOf(ctempfloat));
+                        ctempstr = String.valueOf(c);
+                        temp = temp.concat(ctempstr);
+                        ctempstr = ""; // reset ctemp
+                    }
+                    ++i;
+                } catch (Exception e) {
+                    //jika blank
+                    ++i;
+                }
+            }
+        }
+
+        return temp;
+    }
+
     public static Solution gaussSPL(Matrix m) {
         int i, j, k, count;
         int temp;
@@ -287,22 +333,12 @@ public class SPLGauss {
                         for (k = j+1; k <= m.getLastIdxCol()-1; ++k) {
                             if (m.getElmt(i, k) != 0) {
                                 if (sol.getHasil(k) == MARK) {
-                                    if (m.getElmt(i, j) > 0) {
-                                        if (temp2 == "") {
-                                            temp2 = temp2.concat("-");
-                                        } else {
-                                            temp2 = temp2.concat(" -");
-                                        }
+                                    if (pengaliVar(sol.getVar(k), m.getElmt(i, k) * (-1)).charAt(0) != '-') {
+                                        temp2 = temp2.concat(" +");
                                     } else {
-                                        if (temp2 == "") {
-                                            temp2 = temp2.concat("+");
-                                        } else {
-                                            temp2 = temp2.concat(" +");
-                                        }
+                                        temp2 = temp2.concat(" ");
                                     }
-                                    temp2 = temp2.concat(String.valueOf(Math.abs(m.getElmt(i, k))));
-                                    temp2 = temp2.concat(sol.getVar(k));
-                                    
+                                    temp2 = temp2.concat(pengaliVar(sol.getVar(k), m.getElmt(i, k) * (-1)));
                                 }
                             }
                         }
@@ -409,22 +445,12 @@ public class SPLGauss {
                         for (k = j+1; k <= m.getLastIdxCol()-1; ++k) {
                             if (m.getElmt(i, k) != 0) {
                                 if (sol.getHasil(k) == MARK) {
-                                    if (m.getElmt(i, j) > 0) {
-                                        if (temp2 == "") {
-                                            temp2 = temp2.concat("-");
-                                        } else {
-                                            temp2 = temp2.concat(" -");
-                                        }
+                                    if (pengaliVar(sol.getVar(k), m.getElmt(i, k) * (-1)).charAt(0) != '-') {
+                                        temp2 = temp2.concat(" +");
                                     } else {
-                                        if (temp2 == "") {
-                                            temp2 = temp2.concat("+");
-                                        } else {
-                                            temp2 = temp2.concat(" +");
-                                        }
+                                        temp2 = temp2.concat(" ");
                                     }
-                                    temp2 = temp2.concat(String.valueOf(Math.abs(m.getElmt(i, k))));
-                                    temp2 = temp2.concat(sol.getVar(k));
-                                    
+                                    temp2 = temp2.concat(pengaliVar(sol.getVar(k), m.getElmt(i, k) * (-1)));
                                 }
                             }
                         }
