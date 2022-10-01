@@ -1,7 +1,8 @@
 public class SPLInverse {
     public static Matrix SPLWithInverse(Matrix mA, Matrix mB, boolean isOutputting){
+        Matrix mAinit = mA;
         Matrix mInvA = InverseMat.InverseWithRed(mA);
-        if (mInvA == null || DetReduction.determinanGauss(mA) == 0.0f) {
+        if (mInvA == null || DetReduction.determinanGauss(mAinit) == 0.0f) {
             System.out.println("Matriks ini tidak memilki invers, sehingga SPL tidak dapat diselesaikan dengan metode ini");
             return null;
         } else {
@@ -13,6 +14,7 @@ public class SPLInverse {
                     System.out.println("x" + (i+1) + " = " + mX.getElmt(i, 0));
                 }
             }
+
             return mX;
         }
     }

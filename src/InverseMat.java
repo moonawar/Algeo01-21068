@@ -24,14 +24,16 @@ public class InverseMat {
     }
 
     public static Matrix InverseWithRed(Matrix m){
-        if (DetReduction.determinanGauss(m) == 0.0f || m.rowEff != m.colEff) {
+        if (DetCofactor.determinanCofactor(m) == 0.0f || m.rowEff != m.colEff) {
             System.out.println("\nMatriks tidak memilki invers");
             return null;
         }
 
         
         Matrix mAug = MatrixOperations.IdentityMatrix(m.rowEff);
+
         sortRow(m, mAug);
+
         // Do Gauss Reduction for both Matrix Input and Matrix Identity
         for (int i = 1; i <= m.getLastIdxRow(); i++) {
             for (int k = i; k <= m.getLastIdxRow(); k++) {
@@ -43,7 +45,6 @@ public class InverseMat {
             }
             sortRow(m, mAug);
         }
-
         // For each row, normalize the diagonal element to 1
         for (int i = 0; i <= m.getLastIdxRow(); i++) {
             float normalizer = 1 / m.getElmt(i, i);

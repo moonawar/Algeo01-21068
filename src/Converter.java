@@ -68,7 +68,7 @@ public class Converter {
         return size;
     }
 
-    public Matrix matrixToAugmented (Matrix a, Matrix b) {
+    public static Matrix matrixToAugmented (Matrix a, Matrix b) {
         Matrix m = new Matrix(a.rowEff, a.colEff + 1);
         for (int i = 0; i <= a.getLastIdxRow(); ++i) {
             for (int j = 0; j <= a.getLastIdxCol() + 1; ++j) {

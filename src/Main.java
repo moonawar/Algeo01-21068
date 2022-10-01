@@ -80,6 +80,7 @@ public class Main {
                 mInput = readSPLMain();
             } else {
                 mInput = null;
+                BackToMainMenu();
                 return;
             }
 
@@ -200,7 +201,7 @@ public class Main {
                 break;
             case 2:
                 System.out.println("\nMatriks balikan dari matriks tersebut dengan metode determinan dan adjoin adalah: ");
-                mInverse = InverseMat.InverseWithRed(m);
+                mInverse = InverseMat.InverseWithAdjoin(m);
                 if (mInverse != null) {
                     MatrixOperations.displayMatrix(mInverse);
                 }
@@ -246,7 +247,7 @@ public class Main {
                     mInput = Converter.readTxt(path);
                     Interpolation.PolinomInterpolation(mInput);
                 } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                    System.out.println("\nFile tidak ditemukan");
                 }
 
                 BackToMainMenu();
@@ -288,7 +289,7 @@ public class Main {
                 try {
                     mInput = Converter.readTxt(path);
                 } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                    System.out.println("\nFile tidak ditemukan");
                 }
                 break;
             case 0:
@@ -347,7 +348,7 @@ public class Main {
                         Regression.MultipleLinearRegression(mInput, mInput.rowEff, mInput.colEff - 1);
                         BackToMainMenu();
                     } catch (FileNotFoundException e) {
-                        e.printStackTrace();
+                        System.out.println("\nFile tidak ditemukan");
                     }
                 case 0:
                     BackToMainMenu();
@@ -416,7 +417,7 @@ public class Main {
                     mOut = Converter.readTxt(path);
                     return mOut;
                 } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                    System.out.println("\nFile tidak ditemukan");
                 }
             case 0:
                 BackToMainMenu();
@@ -456,7 +457,7 @@ public class Main {
                         mOut = Converter.readTxt(path);
                         return mOut;
                     } catch (FileNotFoundException e) {
-                        e.printStackTrace();
+                        System.out.println("\nFile tidak ditemukan");
                     }
                 case 0:
                     BackToMainMenu();

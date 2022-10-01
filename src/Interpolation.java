@@ -9,6 +9,7 @@ public class Interpolation {
             }
             mB.setElmt(i, 0, mData.getElmt(i, 1));
         }
+        
         Matrix mX = SPLInverse.SPLWithInverse(mA, mB, false);
 
         boolean isInputting = true;
@@ -56,12 +57,21 @@ public class Interpolation {
 
 
     public static Matrix ReadInterpolationData() {
-        System.out.printf("Masukkan jumlah data poin: ");
+        System.out.printf("\nMasukkan jumlah data poin: ");
         int n = MainScanner.sc.nextInt();
 
         Matrix mData = new Matrix(n, 2);
 
-        System.out.println("Masukkan masing-masing data poin format \"x y\":");
+        System.out.println("""
+            Masukkan masing-masing data poin format \"x y\":
+            Contoh untuk 3 buah data poin:: 
+
+            8.0 2.0794
+            9.0 2.1972
+            9.5 2.2513
+
+            Masukkan data poin:
+            """);
         for (int i = 0; i < n; i++) {
             float x = MainScanner.sc.nextFloat();
             float y = MainScanner.sc.nextFloat();
