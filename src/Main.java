@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+
 public class Main {
     public static void main(String[] args) {
         Welcome();
@@ -70,23 +72,41 @@ public class Main {
             System.out.printf("Punten, pilihannya masih salah. Ayo coba lagi (Pilihan 0-4): ");
             in = MainScanner.sc.nextInt();
         }
+            System.out.println();
+            Solution solution;
+            Matrix mInput;
+
+            if (in != 0) {
+                mInput = readSPLMain();
+            } else {
+                mInput = null;
+                return;
+            }
+
 
         switch (in) {
             case 1:
-                MainMenu();
+                solution = SPLGauss.gaussSPL(mInput);
+                System.out.println("\nSolusi SPL dengan metode eliminasi Gauss:");
+                Solution.displaySolution(solution, mInput);
+                BackToMainMenu();
                 break;
             case 2:
-                MainMenu();
+                solution = SPLGauss.gaussJordanSPL(mInput);
+                System.out.println("\nSolusi SPL dengan metode eliminasi Gauss-Jordan:");
+                Solution.displaySolution(solution, mInput);
+                BackToMainMenu();
                 break;
             case 3:
-                MainMenu();
+                SPLInverse.SPLWithInverse(Converter.augmentedToMatrix(mInput, true), Converter.augmentedToMatrix(mInput, false));
+                BackToMainMenu();
                 break;
             case 4:
-                MainMenu();
+                SPLCrammer.cramer(Converter.augmentedToMatrix(mInput, true), Converter.augmentedToMatrix(mInput, false));
+                BackToMainMenu();
                 break;
             case 0:
-                System.out.println("\nKembali ke menu utama...");
-                MainMenu();
+                BackToMainMenu();
                 break;
         }
     }
@@ -108,16 +128,30 @@ public class Main {
             in = MainScanner.sc.nextInt();
         }
 
+        Matrix mInput;
+
+        if (in != 0) {
+            mInput = readMatrixMain();
+            while (!mInput.isSquare()) {
+                System.out.println("Maaf, matriks yang kamu masukkan bukan matriks persegi. Ayo coba lagi!");
+                mInput = readMatrixMain();
+            }
+        } else {
+            mInput = null;
+        }
+
+
         switch (in) {
             case 1:
-                MainMenu();
+                System.out.println("\nDeterminan dari matriks tersebut dengan metode reduksi baris adalah: " + DetReduction.determinanGauss(mInput));
+                BackToMainMenu();
                 break;
             case 2:
-                MainMenu();
+                System.out.println("\nDeterminan dari matriks tersebut dengan metode ekspansi kofaktor adalah: " + DetReduction.determinanGauss(mInput));
+                BackToMainMenu();
                 break;
             case 0:
-            System.out.println("\nKembali ke menu utama...");
-                MainMenu();
+                BackToMainMenu();
                 break;
         }
     }
@@ -127,7 +161,7 @@ public class Main {
         System.out.printf("""
                             PILIHAN METODE INVERSE MATRIKS
         (1) Metode Reduksi Baris (Input | Identitas)
-        (2) Metode Determinan Adjoin
+        (2) Metode Determinan dan Adjoin
 
         (0) Kembali ke menu utama
         """);
@@ -135,36 +169,182 @@ public class Main {
         int in = MainScanner.sc.nextInt();
 
         while (in < 0 || in > 2){
-            System.out.printf("Punten, pilihannya masih salah. Ayo coba lagi (Pilihan 0-4): ");
+            System.out.printf("Punten, pilihannya masih salah. Ayo coba lagi (Pilihan 0-2): ");
             in = MainScanner.sc.nextInt();
         }
 
+        Matrix mInput;
+
+        if (in != 0) {
+            mInput = readMatrixMain();
+            while (!mInput.isSquare()) {
+                System.out.println("Maaf, matriks yang kamu masukkan bukan matriks persegi. Ayo coba lagi!");
+                mInput = readMatrixMain();
+            }
+        } else {
+            mInput = null;
+        }
+
+
         switch (in) {
             case 1:
-                MainMenu();
+                System.out.println("\nMatriks balikan dari matriks tersebut dengan metode reduksi baris adalah: ");
+                MatrixOperations.displayMatrix(InverseMat.InverseWithRed(mInput));
+                BackToMainMenu();
                 break;
             case 2:
-                MainMenu();
+                System.out.println("\nMatriks balikan dari matriks tersebut dengan metode determinan dan adjoin adalah: ");
+                MatrixOperations.displayMatrix(InverseMat.InverseWithAdjoin(mInput));
+                BackToMainMenu();
                 break;
             case 0:
-                System.out.println("\nKembali ke menu utama...");
-                MainMenu();
+                BackToMainMenu();
                 break;
         }
     }
 
     public static void PolinomInterMenu(){
-        System.out.println("\nInterpolasi polinom (please don't hurt my family).\n");
+        System.out.println("\nInterpolasi polinom.\n");
+
+        System.out.println("\nPilih cara kalian untuk input matrix!\n");
+        System.out.printf("""
+                            PILIHAN METODE INPUT MATRIX
+        (1) Melalui keyboard
+        (2) Melalui File
+
+        (0) Kembali ke menu utama
+        """);
+        System.out.printf("Ayo dipilih.. (Pilihan 0-2): ");
+        int in = MainScanner.sc.nextInt();
+
+        while (in < 0 || in > 2){
+            System.out.printf("Punten, pilihannya masih salah. Ayo coba lagi (Pilihan 0-2): ");
+            in = MainScanner.sc.nextInt();
+        }
+
+        Matrix mInput;
+
+        switch (in) {
+            case 1:
+                mInput = Interpolation.ReadInterpolationData();
+                break;
+            case 2:
+                System.out.println("\nMasukkan path ke file yang ingin dibaca: ");
+                String path = MainScanner.sc.next();
+                try {
+                    mInput = Converter.readTxt(path);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            case 0:
+                BackToMainMenu();
+            default:
+                throw new IllegalStateException("Unexpected value: " + in);
+        }
+
+        Interpolation.PolinomInterpolation(mInput);
     }
 
     public static void BicubicInterMenu(){
         System.out.println("\nUwoghh! Kamu tahu apa itu bicubic interpolation!??? Kamu adalah orang yang sangat berbudaya ˚‧º·(˃̣̣̥o˂̣̣̥)‧º·\n");
+        System.out.println("\nPilih cara kalian untuk input matrix!\n");
+        System.out.printf("""
+                            PILIHAN METODE INPUT MATRIX
+        (1) Melalui keyboard
+        (2) Melalui File
+
+        (0) Kembali ke menu utama
+        """);
+        System.out.printf("Ayo dipilih.. (Pilihan 0-2): ");
+        int in = MainScanner.sc.nextInt();
+
+        while (in < 0 || in > 2){
+            System.out.printf("Punten, pilihannya masih salah. Ayo coba lagi (Pilihan 0-2): ");
+            in = MainScanner.sc.nextInt();
+        }
+
+        Matrix mInput;
+
+        switch (in) {
+            case 1:
+                mInput = Interpolation.ReadBicubicMatrix();
+                break;
+            case 2:
+                System.out.println("\nMasukkan path ke file yang ingin dibaca: ");
+                String path = MainScanner.sc.next();
+                try {
+                    mInput = Converter.readTxt(path);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            case 0:
+                BackToMainMenu();
+            default:
+                throw new IllegalStateException("Unexpected value: " + in);
+        }
+
+        float inX = mInput.getElmt(4, 0);
+        float inY = mInput.getElmt(4, 1);
+
+        Matrix mIn = new Matrix(4, 4);
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                mIn.setElmt(i, j, mInput.getElmt(i, j));
+            }
+        }
+
+        Interpolation.BicubicInterpolation(mInput, inX, inY);
     }
 
     public static void RegresiMenu(){
         System.out.println("""
             \nRegresi linear kaya praktikum fisika, tapi yang ini berganda.\n
             """);
+
+            System.out.println("\nPilih cara kalian untuk input matrix!\n");
+            System.out.printf("""
+                                PILIHAN METODE INPUT MATRIX
+            (1) Melalui keyboard
+            (2) Melalui File
+    
+            (0) Kembali ke menu utama
+            """);
+            System.out.printf("Ayo dipilih.. (Pilihan 0-2): ");
+            int in = MainScanner.sc.nextInt();
+    
+            while (in < 0 || in > 2){
+                System.out.printf("Punten, pilihannya masih salah. Ayo coba lagi (Pilihan 0-2): ");
+                in = MainScanner.sc.nextInt();
+            }
+    
+            Matrix mInput;
+    
+            switch (in) {
+                case 1:
+                    Regression.ReadRegressionData();
+                    break;
+                case 2:
+                    System.out.println("\nMasukkan path ke file yang ingin dibaca: ");
+                    String path = MainScanner.sc.next();
+                    try {
+                        mInput = Converter.readTxt(path);
+                        Matrix mInputX = new Matrix(mInput.rowEff - 1, mInput.colEff);
+                        for (int i = 0; i <= mInputX.getLastIdxRow(); i++) {
+                            for (int j = 0; j <= mInputX.getLastIdxCol(); j++) {
+                                mInputX.setElmt(i, j, mInput.getElmt(i, j));
+                            }
+                        }
+
+                        Regression.MultipleLinearRegression(mInputX, mInput.rowEff, mInput.colEff);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                case 0:
+                    BackToMainMenu();
+                default:
+                    throw new IllegalStateException("Unexpected value: " + in);
+            }
+        
     }
 
     public static void Welcome(){
@@ -189,5 +369,90 @@ public class Main {
         |  |      |  |____ |  |      |  |____ |  |__| |  /  _____  \\  .----)   |               BY ADDIN, LUIS,
         | _|      |_______|| _|      |_______| \\______| /__/     \\__\\ |_______/                AND ILHAM              
         """);
+    }
+
+    public static void BackToMainMenu(){
+        System.out.println("\nKembali ke menu utama...");
+        MainMenu();
+    }
+
+    public static Matrix readSPLMain(){
+        System.out.println("\nPilih cara kalian untuk input matrix!\n");
+        System.out.printf("""
+                            PILIHAN METODE INPUT MATRIX
+        (1) Melalui keyboard
+        (2) Melalui File
+
+        (0) Kembali ke menu utama
+        """);
+        System.out.printf("Ayo dipilih.. (Pilihan 0-2): ");
+        int in = MainScanner.sc.nextInt();
+
+        while (in < 0 || in > 2){
+            System.out.printf("Punten, pilihannya masih salah. Ayo coba lagi (Pilihan 0-2): ");
+            in = MainScanner.sc.nextInt();
+        }
+
+        Matrix mOut;
+
+        switch (in) {
+            case 1:
+                mOut = MatrixOperations.readSPL();
+                return mOut;
+            case 2:
+                System.out.println("\nMasukkan path ke file yang ingin dibaca: ");
+                String path = MainScanner.sc.next();
+                try {
+                    mOut = Converter.readTxt(path);
+                    return mOut;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            case 0:
+                BackToMainMenu();
+                return null;
+            default:
+                throw new IllegalStateException("Unexpected value: " + in);
+        }
+    }
+
+        public static Matrix readMatrixMain(){
+            System.out.println("\nPilih cara kalian untuk input matrix!\n");
+            System.out.printf("""
+                                PILIHAN METODE INPUT MATRIX
+            (1) Melalui keyboard
+            (2) Melalui File
+    
+            (0) Kembali ke menu utama
+            """);
+            System.out.printf("Ayo dipilih.. (Pilihan 0-2): ");
+            int in = MainScanner.sc.nextInt();
+    
+            while (in < 0 || in > 2){
+                System.out.printf("Punten, pilihannya masih salah. Ayo coba lagi (Pilihan 0-2): ");
+                in = MainScanner.sc.nextInt();
+            }
+    
+            Matrix mOut;
+    
+            switch (in) {
+                case 1:
+                    mOut = MatrixOperations.readMatrix();
+                    return mOut;
+                case 2:
+                    System.out.println("\nMasukkan path ke file yang ingin dibaca: ");
+                    String path = MainScanner.sc.next();
+                    try {
+                        mOut = Converter.readTxt(path);
+                        return mOut;
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                case 0:
+                    BackToMainMenu();
+                    return null;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + in);
+            } 
     }
 }

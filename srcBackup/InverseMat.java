@@ -25,7 +25,7 @@ public class InverseMat {
 
     public static Matrix InverseWithRed(Matrix m){
         if (DetCofactor.determinanCofactor(m) == 0.0f || m.rowEff != m.colEff) {
-            System.out.println("\nMatriks tidak memilki invers");
+            System.out.println("Matriks tidak memilki invers");
             return null;
         }
 
@@ -143,7 +143,7 @@ public class InverseMat {
         Matrix mOut;
         Matrix adjoin = transposeMat(MatCofactor(m));
         if (determinanCofactor(m) == 0) {
-            System.out.println("\nMatriks tidak memilki invers");
+            System.out.println("Matriks tidak memilki invers");
             return null;
         } else {
             mOut = multiplyMatConst(adjoin, 1 / determinanCofactor(m));

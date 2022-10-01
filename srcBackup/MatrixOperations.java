@@ -2,7 +2,7 @@ public class MatrixOperations {
     
     public static Matrix readMatrix(){
         int nRow, nCol;
-        System.out.printf("\nMasukkan jumlah baris: ");
+        System.out.printf("Masukkan jumlah baris: ");
         nRow = MainScanner.sc.nextInt();
         System.out.printf("Masukkan jumlah kolom: ");
         nCol = MainScanner.sc.nextInt();
@@ -33,21 +33,15 @@ public class MatrixOperations {
 
     public static Matrix readSPL(){
         int nRow, nCol;
-        System.out.printf("\nMasukkan jumlah persamaan: ");
+        System.out.printf("Enter the number of rows: ");
         nRow = MainScanner.sc.nextInt();
-        System.out.printf("Masukkan jumlah variable peubah (x): ");
+        System.out.printf("Enter the number of columns: ");
         nCol = MainScanner.sc.nextInt();
 
-        Matrix m = new Matrix(nRow, nCol + 1);
+        Matrix m = new Matrix(nRow, nCol);
 
         for (int i = 0; i <= m.getLastIdxRow(); i++) {
-            System.out.println("\nPersamaan ke-" + (i+1));
             for (int j = 0; j <= m.getLastIdxCol(); j++) {
-                if (j == m.getLastIdxCol()) {
-                    System.out.printf("Masukkan nilai solusi y%d: ", i+1);
-                } else {
-                    System.out.printf("Masukkan nilai koefisien x%d: ", j+1);
-                }
                 m.setElmt(i, j, MainScanner.sc.nextFloat());
             }
         }
