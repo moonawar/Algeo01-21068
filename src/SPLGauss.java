@@ -647,13 +647,4 @@ public class SPLGauss {
             return sol;
         }
     }
-
-    public static void main(String[] args) {
-        Matrix m;
-        Solution sol;
-
-        m = MatrixOperations.readMatrix();
-        sol = gaussJordanSPL(m);
-        Solution.displaySolution(sol, m);
-    }
 }
