@@ -511,16 +511,8 @@ public class SPLGauss {
                     } 
                 }
             }
+            rapihkanSPL(sol, m.getLastIdxCol() - 1);
             return sol;
         }
-    }
-
-    public static void main(String[] args) {
-        Matrix m;
-        Solution sol;
-
-        m = MatrixOperations.readMatrix();
-        sol = gaussSPL(m);
-        Solution.displaySolution(sol, m);
     }
 }
