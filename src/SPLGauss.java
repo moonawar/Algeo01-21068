@@ -323,12 +323,10 @@ public class SPLGauss {
                         try {
                             temp = Float.parseFloat(currentWord);
                             equation[length] += temp;
-                            System.out.println(temp);
                             currentWord = "";
                             
                         } catch (Exception e) {
                             tempASCII = currentWord.charAt(currentWord.length()-1);
-                            System.out.println(tempASCII);
                             if (currentWord.length() == 1) {
                                 equation[tempASCII-97] += 1;
                             } else if (currentWord.length() == 2) {
