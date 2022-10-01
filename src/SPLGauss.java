@@ -285,9 +285,141 @@ public class SPLGauss {
                     }
                 }
 
-                sol.setVar(i, temp2);
+                sol.setVar(i, sederhanakanSPL(temp2, 25));
             }
         }
+    }
+
+    public static String sederhanakanSPL(String s, int length) {
+        int i = 0;
+        int j;
+        int tempASCII;
+        String currentWord = "";
+        String end = "";
+        char test;
+        float temp;
+        float[] equation;
+        String[] variableList;
+        equation = new float[length+1];
+        variableList = new String[length+1];
+        String listVar = "abcdefghijklmnopqrstuvwxyz";
+
+        for (j = 0; j <= length; ++j) {
+            variableList[j] = listVar.substring(j, j+1);
+            equation[j] = 0;
+        }
+
+        while (i <= s.length()-1) {
+            if (s.charAt(i) == ' ' || i == s.length()-1) {
+                if (i == s.length()-1) {
+                    currentWord = currentWord.concat(String.valueOf(s.charAt(i)));
+                }
+                
+                if ((currentWord.charAt(0) == '-' || currentWord.charAt(0) == '+') && currentWord.length() == 1) {
+                    ++i;
+                    continue;
+                } else {
+                    if (currentWord.charAt(currentWord.length()-1) != 'd') {
+                        try {
+                            temp = Float.parseFloat(currentWord);
+                            equation[length] += temp;
+                            System.out.println(temp);
+                            currentWord = "";
+                            
+                        } catch (Exception e) {
+                            tempASCII = currentWord.charAt(currentWord.length()-1);
+                            System.out.println(tempASCII);
+                            if (currentWord.length() == 1) {
+                                equation[tempASCII-97] += 1;
+                            } else if (currentWord.length() == 2) {
+                                if (currentWord.charAt(currentWord.length()-2) == '-') {
+                                    equation[tempASCII-97] -= 1;
+                                } else {
+                                    equation[tempASCII-97] += 1;
+                                }
+                            } 
+                            else {
+                                currentWord = currentWord.substring(0, currentWord.length()-1);
+                                temp = Float.parseFloat(currentWord);
+                                equation[tempASCII-97] += temp;
+                            }
+                            currentWord = "";
+                            
+                        }
+                    } else {
+                        tempASCII = currentWord.charAt(currentWord.length()-1);
+                        if (currentWord.length() == 1) {
+                            equation[tempASCII-97] += 1;
+                        } else if (currentWord.length() == 2) {
+                            if (currentWord.charAt(currentWord.length()-2) == '-') {
+                                equation[tempASCII-97] -= 1;
+                            } else {
+                                equation[tempASCII-97] += 1;
+                            }
+                        } 
+                        else {
+                            currentWord = currentWord.substring(0, currentWord.length()-1);
+                            temp = Float.parseFloat(currentWord);
+                            equation[tempASCII-97] += temp;
+                        }
+                        currentWord = "";
+                    }
+                }
+            } else {
+                currentWord = currentWord.concat(String.valueOf(s.charAt(i)));
+            }
+            ++i;   
+        }
+        if (equation[length] != 0) {
+            end = String.valueOf(equation[length]);
+        } else {
+            end = "";
+        }
+
+        for (j = 0; j < length; ++j) {
+            if (equation[j] == 0) {
+                continue;
+            } else if (equation[j] > 0) {
+                if (end != "") {
+                    end = end.concat(" + ");
+                    if (equation[j] == 1) {
+                        end = end.concat(variableList[j]);
+                    } else {
+                        end = end.concat(String.valueOf(equation[j]));
+                        end = end.concat(variableList[j]);
+                    }
+                } else {
+                    if (equation[j] == 1) {
+                        end = end.concat(variableList[j]);
+                    } else {
+                        end = end.concat(String.valueOf(equation[j]));
+                        end = end.concat(variableList[j]);
+                    }
+                }
+            } else {
+                if (end != "") {
+                    end = end.concat(" - ");
+                    if (equation[j] == -1) {
+                        end = end.concat(variableList[j]);
+                    } else {
+                        end = end.concat(String.valueOf(Math.abs(equation[j])));
+                        end = end.concat(variableList[j]);
+                    }
+                } else {
+                    end = end.concat("-");
+                    if (equation[j] == -1) {
+                        end = end.concat(variableList[j]);
+                    } else {
+                        end = end.concat(String.valueOf(Math.abs(equation[j])));
+                        end = end.concat(variableList[j]);
+                    }
+                }
+            }    
+        }
+        if (end == "") {
+            end = "0";
+        }
+        return end;
     }
 
     public static Solution gaussSPL(Matrix m) {
@@ -511,8 +643,17 @@ public class SPLGauss {
                     } 
                 }
             }
-            rapihkanSPL(sol, m.getLastIdxCol() - 1);
+            rapihkanSPL(sol, m.getLastIdxCol()-1);
             return sol;
         }
+    }
+
+    public static void main(String[] args) {
+        Matrix m;
+        Solution sol;
+
+        m = MatrixOperations.readMatrix();
+        sol = gaussJordanSPL(m);
+        Solution.displaySolution(sol, m);
     }
 }
