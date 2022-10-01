@@ -222,6 +222,9 @@ public class SPLGauss {
                         //jika variabel
                         ctempfloat = Float.parseFloat(ctempstr);
                         ctempfloat *= x;
+                        if (ctempfloat > 0) {
+                            temp = temp.concat(String.valueOf("+"));
+                        }
                         temp = temp.concat(String.valueOf(ctempfloat));
                         ctempstr = String.valueOf(c);
                         temp = temp.concat(ctempstr);
@@ -236,6 +239,55 @@ public class SPLGauss {
         }
 
         return temp;
+    }
+
+    public static void rapihkanSPL(Solution sol, int j) {
+        String temp, temp2;
+        int panjang, tempASCII;
+        char tempChar;
+
+        for (int i = 0; i <= j; ++i) {
+            temp2 = "";
+            temp = sol.getVar(i);
+            panjang = temp.length();
+            if (panjang == 1) {
+                temp2 = temp2.concat(temp);
+            } else {
+                for (int k = 0; k <= panjang-1; ++k) {
+                    try {
+                        tempChar = temp.charAt(k);
+                        if (tempChar == '-') {
+                            if (temp2 == "") {
+                                temp2 = temp2.concat(String.valueOf(tempChar));
+                                temp2 = temp2.concat(" ");
+                            } else {
+                                temp2 = temp2.concat(" ");
+                                temp2 = temp2.concat(String.valueOf(tempChar));
+                                temp2 = temp2.concat(" ");
+                            }
+                        } else if (tempChar == '+') {
+                            if (temp2 == "") {
+                                continue;
+                            } else {
+                                temp2 = temp2.concat(" ");
+                                temp2 = temp2.concat(String.valueOf(tempChar));
+                                temp2 = temp2.concat(" ");
+                            }
+                        } else if (tempChar == ' ') {
+                            continue;
+                        } else if (tempChar == '.') {
+                            temp2 = temp2.concat(String.valueOf(tempChar));
+                        } else {
+                            temp2 = temp2.concat(String.valueOf(tempChar));
+                        }
+                    } catch (Exception e) {
+                        continue;
+                    }
+                }
+
+                sol.setVar(i, temp2);
+            }
+        }
     }
 
     public static Solution gaussSPL(Matrix m) {
@@ -346,6 +398,7 @@ public class SPLGauss {
                     } 
                 }
             }
+            rapihkanSPL(sol, m.getLastIdxCol() - 1);
             return sol;
         }
     }
@@ -460,5 +513,14 @@ public class SPLGauss {
             }
             return sol;
         }
+    }
+
+    public static void main(String[] args) {
+        Matrix m;
+        Solution sol;
+
+        m = MatrixOperations.readMatrix();
+        sol = gaussSPL(m);
+        Solution.displaySolution(sol, m);
     }
 }

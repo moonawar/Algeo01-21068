@@ -33,7 +33,7 @@ public class Solution {
         this.state = s;
     }
 
-    public void displaySolution(Solution sol, Matrix m) {
+    public static void displaySolution(Solution sol, Matrix m) {
         if (sol.getState()) {
             for (int j = 0; j <= m.getLastIdxCol()-1; j++) {
                 System.out.println("x" + (j + 1) + " = " + sol.getVar(j));
