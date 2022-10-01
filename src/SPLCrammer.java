@@ -11,11 +11,11 @@ public class SPLCrammer {
         Matrix cram = new Matrix(order,order);
         for (int i=0; i<order; i++){
             for(int j=0; j<order; j++){
-                 if (j! = replacedcol){
-                    cram.getElmt(i, j) = mat.getElmt(i, j);
+                 if (j != replacedcol){
+                    cram.mem[i][j] = mat.getElmt(i, j);
                 }
                 else{
-                    cram.getElmt(i, replacedcol)= nilai.getElmt(i, 0);
+                    cram.mem[i][replacedcol]= nilai.getElmt(i, 0);
                 }
             }
         }
