@@ -189,12 +189,16 @@ public class Main {
         switch (in) {
             case 1:
                 System.out.println("\nMatriks balikan dari matriks tersebut dengan metode reduksi baris adalah: ");
-                MatrixOperations.displayMatrix(InverseMat.InverseWithRed(mInput));
+                if (InverseMat.InverseWithRed(mInput) != null) {
+                    MatrixOperations.displayMatrix(InverseMat.InverseWithRed(mInput));
+                }
                 BackToMainMenu();
                 break;
             case 2:
                 System.out.println("\nMatriks balikan dari matriks tersebut dengan metode determinan dan adjoin adalah: ");
-                MatrixOperations.displayMatrix(InverseMat.InverseWithAdjoin(mInput));
+                if (InverseMat.InverseWithRed(mInput) != null) {
+                    MatrixOperations.displayMatrix(InverseMat.InverseWithAdjoin(mInput));
+                }
                 BackToMainMenu();
                 break;
             case 0:

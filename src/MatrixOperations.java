@@ -9,6 +9,7 @@ public class MatrixOperations {
 
         Matrix m = new Matrix(nRow, nCol);
         System.out.printf("""
+            
             Cara input elemen matriks:    
             Input elemen dengan memasukkan baris per baris. Untuk kolom, setiap elemen dipisahkan dengan spasi.    
             Untuk bicubic interpolation, matriks yang diinputkan adalah matriks 4x4. Contoh input matrix 4x4:   

@@ -42,4 +42,9 @@ public class DetCofactor {
     public static float determinanCofactor(Matrix m) {
         return 0;
     }
+
+
+    public static Matrix ExcludeRowCol(Matrix m, int i, int j) {
+        return null;
+    }
 }

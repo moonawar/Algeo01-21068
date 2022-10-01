@@ -89,13 +89,9 @@ public class Converter {
 
         if (A) {
             Matrix m1 = new Matrix(m.rowEff, m.colEff - 1);
-            for (int i = 0; i <= m1.getLastIdxRow(); ++i) {
-                for (int j = 0; j <= m1.getLastIdxCol(); ++j) {
-                    if (j == m1.getLastIdxCol()) {
-                        m1.setElmt(i, j, m.getElmt(i, 0));
-                    } else {
-                        m1.setElmt(i, j, m.getElmt(i, j));
-                    }
+            for (int i = 0; i <= m1.getLastIdxRow(); i++) {
+                for (int j = 0; j <= m1.getLastIdxCol(); j++) {
+                    m1.setElmt(i, j, m.getElmt(i, j));
                 }
             }
             return m1;

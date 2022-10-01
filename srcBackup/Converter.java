@@ -82,7 +82,7 @@ public class Converter {
         return m;
     }
 
-    public Matrix augmentedToMatrix (Matrix m, boolean A) {
+    public static Matrix augmentedToMatrix (Matrix m, boolean A) {
         // Ax = B
         // if (A), maka fungsi mengembalikan A
         // if (!A) maka fungsi mengembalikan B

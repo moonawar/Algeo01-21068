@@ -1,10 +1,10 @@
 public class SPLCrammer {
     public static void cramer(final Matrix mA, final Matrix mB) {
         if (DetCofactor.determinanCofactor(mA) == 0.0f || mA.rowEff != mA.colEff) {
-            System.out.println("Determinan Matriks inputnya 0 atau matriks bukan persegi, sehingga matriks tidak dapat diselesaikan dengan metode Cramer");
+            System.out.println("\nDeterminan Matriks inputnya 0 atau matriks bukan persegi, sehingga matriks tidak dapat diselesaikan dengan metode Cramer");
         }
         else {
-            System.out.println("Solusi SPL dengan menggunakan metode Cramer:");
+            System.out.println("\nSolusi SPL dengan menggunakan metode Cramer:");
             for (int i = 0; i <= mA.getLastIdxCol(); i++) {
                 System.out.println("x" + (i + 1) + " = " + DetCofactor.determinanCofactor(subsCramer(mA, mB, i)) / DetCofactor.determinanCofactor(mA));
             }
