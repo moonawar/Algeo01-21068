@@ -222,9 +222,6 @@ public class SPLGauss {
                         //jika variabel
                         ctempfloat = Float.parseFloat(ctempstr);
                         ctempfloat *= x;
-                        if (ctempfloat > 0) {
-                            temp = temp.concat(String.valueOf("+"));
-                        }
                         temp = temp.concat(String.valueOf(ctempfloat));
                         ctempstr = String.valueOf(c);
                         temp = temp.concat(ctempstr);
