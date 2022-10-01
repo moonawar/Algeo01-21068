@@ -9,33 +9,49 @@ public class Interpolation {
             }
             mB.setElmt(i, 0, mData.getElmt(i, 1));
         }
-        Matrix mX = SPLInverse.SPLWithInverse(mA, mB);
+        Matrix mX = SPLInverse.SPLWithInverse(mA, mB, false);
 
-        System.out.printf("Masukkan x yang ingin ditaksir dengan interpolasi polinom: ");
-        float e = MainScanner.sc.nextFloat();
+        boolean isInputting = true;
 
-        System.out.printf("Hasil interpolasi polinom \nf(x) = ");
-        for (int i = mX.getLastIdxRow(); i >= 0; i--) {
-            if (i == 0) {
-                System.out.printf("%.4f\n", mX.getElmt(i, 0));
-            } else if (i == 1){
-                System.out.printf("%.4fx + ", mX.getElmt(i, 0));
-            } else {
-                System.out.printf("%.4fx^%d + ", mX.getElmt(i, 0), i);
+        while (isInputting) {
+            System.out.printf("\nMasukkan x yang ingin ditaksir dengan interpolasi polinom: ");
+            float e = MainScanner.sc.nextFloat();
+    
+            System.out.printf("\nHasil interpolasi polinom \nf(x) = ");
+            for (int i = mX.getLastIdxRow(); i >= 0; i--) {
+                if (i == 0) {
+                    System.out.printf("%.4f\n", mX.getElmt(i, 0));
+                } else if (i == 1){
+                    System.out.printf("%.4fx + ", mX.getElmt(i, 0));
+                } else {
+                    System.out.printf("%.4fx^%d + ", mX.getElmt(i, 0), i);
+                }
             }
-        }
-
-        System.out.printf("f(%.4f) = ", e);
-        float sum = 0f;
-        for (int i = mX.getLastIdxRow(); i >= 0; i--) {
-            sum += mX.getElmt(i, 0) * (float) Math.pow(e, i);
-            if (i == 0) {
-                System.out.printf("%.4f", mX.getElmt(i, 0) * (float) Math.pow(e, i));
-            } else {
-                System.out.printf("%.4f + ", mX.getElmt(i, 0) * (float) Math.pow(e, i));
+    
+            System.out.printf("f(%.4f) = ", e);
+            float sum = 0f;
+            for (int i = mX.getLastIdxRow(); i >= 0; i--) {
+                sum += mX.getElmt(i, 0) * (float) Math.pow(e, i);
+                if (i == 0) {
+                    System.out.printf("%.4f", mX.getElmt(i, 0) * (float) Math.pow(e, i));
+                } else {
+                    System.out.printf("%.4f + ", mX.getElmt(i, 0) * (float) Math.pow(e, i));
+                }
             }
+            System.out.printf(" = %.4f\n", sum);
+
+
+            System.out.printf("\nApakah anda ingin menaksir x lain? (y/n): ");
+            String input = MainScanner.sc.next();
+
+            while (!input.equals("y") && !input.equals("n")) {
+                System.out.printf("Input tidak valid. Masukkan kembali: ");
+                input = MainScanner.sc.next();
+            }
+            if (input.equals("n")) {
+                isInputting = false;
+            } 
         }
-        System.out.printf(" = %.4f\n", sum);
     }
 
 
@@ -72,7 +88,7 @@ public class Interpolation {
                 row++;
             }
         }
-
+        
         Matrix y = new Matrix(16, 1);
         row = 0;
         for (int j = 0; j <= m.getLastIdxCol(); j++) {
@@ -81,13 +97,12 @@ public class Interpolation {
                 row++;
             }
         }
-
         Matrix XInverse = InverseMat.InverseWithRed(X);
         Matrix a = MatrixOperations.multiplyMatrix(XInverse, y);
 
         row = 0;
         float f_xy = 0;
-
+        
         for (int j = 0; j <= 3; j++) {
             for (int i = 0; i <= 3; i++) {
                 f_xy += a.getElmt(row, 0) * (float) Math.pow(inX, i) * (float) Math.pow(inY, j);

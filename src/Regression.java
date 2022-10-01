@@ -46,7 +46,9 @@ public class Regression {
             mSol.setElmt(i, 0, sum);
         }
 
-        Matrix mX = SPLInverse.SPLWithInverse(mEq, mSol);
+        MatrixOperations.displayMatrix(mEq);
+
+        Matrix mX = SPLInverse.SPLWithInverse(mEq, mSol, false);
         
         System.out.println("Persamaan regresi:");
         System.out.printf("f(x) = ");

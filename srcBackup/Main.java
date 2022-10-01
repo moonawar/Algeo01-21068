@@ -96,7 +96,7 @@ public class Main {
                 BackToMainMenu();
                 break;
             case 3:
-                SPLInverse.SPLWithInverse(Converter.augmentedToMatrix(mInput, true), Converter.augmentedToMatrix(mInput, false));
+                SPLInverse.SPLWithInverse(Converter.augmentedToMatrix(mInput, true), Converter.augmentedToMatrix(mInput, false), true);
                 BackToMainMenu();
                 break;
             case 4:

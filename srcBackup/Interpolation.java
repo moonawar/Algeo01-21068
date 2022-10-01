@@ -9,7 +9,7 @@ public class Interpolation {
             }
             mB.setElmt(i, 0, mData.getElmt(i, 1));
         }
-        Matrix mX = SPLInverse.SPLWithInverse(mA, mB);
+        Matrix mX = SPLInverse.SPLWithInverse(mA, mB, false);
 
         System.out.printf("Masukkan x yang ingin ditaksir dengan interpolasi polinom: ");
         float e = MainScanner.sc.nextFloat();

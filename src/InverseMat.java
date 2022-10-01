@@ -24,15 +24,14 @@ public class InverseMat {
     }
 
     public static Matrix InverseWithRed(Matrix m){
-        if (DetCofactor.determinanCofactor(m) == 0.0f || m.rowEff != m.colEff) {
+        if (DetReduction.determinanGauss(m) == 0.0f || m.rowEff != m.colEff) {
             System.out.println("\nMatriks tidak memilki invers");
             return null;
         }
 
+        
         Matrix mAug = MatrixOperations.IdentityMatrix(m.rowEff);
-
         sortRow(m, mAug);
-
         // Do Gauss Reduction for both Matrix Input and Matrix Identity
         for (int i = 1; i <= m.getLastIdxRow(); i++) {
             for (int k = i; k <= m.getLastIdxRow(); k++) {
@@ -112,11 +111,12 @@ public class InverseMat {
     public static Matrix InverseWithAdjoin(Matrix m){
         Matrix mOut;
         Matrix adjoin = transposeMat(MatCofactor(m));
+        MatrixOperations.displayMatrix(m);
         if (DetCofactor.determinanCofactor(m) == 0) {
             System.out.println("\nMatriks tidak memilki invers");
             return null;
         } else {
-            MatrixOperations.displayMatrix(adjoin);
+
             mOut = multiplyMatConst(adjoin, 1 / DetCofactor.determinanCofactor(m));
             return mOut;
         }

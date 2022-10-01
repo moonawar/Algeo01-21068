@@ -46,29 +46,45 @@ public class Regression {
             mSol.setElmt(i, 0, sum);
         }
 
-        Matrix mX = SPLInverse.SPLWithInverse(mEq, mSol);
+        Matrix mX = SPLInverse.SPLWithInverse(mEq, mSol, false);
         
-        System.out.println("Persamaan regresi:");
+        System.out.println("\nPersamaan regresi:");
         System.out.printf("f(x) = ");
         for (int i = 0; i <= n; i++) {
             if (i == 0) {
                 System.out.printf("%.4f + ", mX.getElmt(i, 0));
             } else {
-                System.out.printf("%.4fx%d", mX.getElmt(i, 0), i);
+                System.out.printf("%.4fx%d\n", mX.getElmt(i, 0), i);
                 if (i != n) {
                     System.out.printf(" + ");
                 } 
             }
         }
 
-        System.out.println("\nMasukkan data yang ingin ditaksir");
-        float f_x = mX.getElmt(0, 0);
-        for (int i = 0; i < n; i++) {
-            System.out.printf("Masukkan nilai x%d: ", i+1);
-            f_x += MainScanner.sc.nextFloat() * mX.getElmt(i+1, 0);
+        boolean isInputting = true;
+
+        while (isInputting) {
+            System.out.println("\nMasukkan data yang ingin ditaksir");
+            float f_x = mX.getElmt(0, 0);
+            for (int i = 0; i < n; i++) {
+                System.out.printf("Masukkan nilai x%d: ", i+1);
+                f_x += MainScanner.sc.nextFloat() * mX.getElmt(i+1, 0);
+            }
+    
+            System.out.printf("f_x(k) = %.4f\n", f_x);
+
+            System.out.printf("\nApakah anda ingin menaksir data lain? (y/n): ");
+            String input = MainScanner.sc.next();
+
+            while (!input.equals("y") && !input.equals("n")) {
+                System.out.printf("Input tidak valid. Masukkan kembali: ");
+                input = MainScanner.sc.next();
+            }
+            if (input.equals("n")) {
+                isInputting = false;
+            } 
         }
 
-        System.out.printf("f(x-k) = %.4f", f_x);
     }
 
     public static void ReadRegressionData() {

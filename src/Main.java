@@ -98,7 +98,7 @@ public class Main {
                 BackToMainMenu();
                 break;
             case 3:
-                SPLInverse.SPLWithInverse(Converter.augmentedToMatrix(mInput, true), Converter.augmentedToMatrix(mInput, false));
+                SPLInverse.SPLWithInverse(Converter.augmentedToMatrix(mInput, true), Converter.augmentedToMatrix(mInput, false), true);
                 BackToMainMenu();
                 break;
             case 4:
@@ -136,6 +136,7 @@ public class Main {
                 System.out.println("Maaf, matriks yang kamu masukkan bukan matriks persegi. Ayo coba lagi!");
                 mInput = readMatrixMain();
             }
+
         } else {
             mInput = null;
         }
@@ -173,31 +174,35 @@ public class Main {
             in = MainScanner.sc.nextInt();
         }
 
-        Matrix mInput;
+        Matrix m;
 
         if (in != 0) {
-            mInput = readMatrixMain();
-            while (!mInput.isSquare()) {
+            m = readMatrixMain();
+            while (!m.isSquare()) {
                 System.out.println("Maaf, matriks yang kamu masukkan bukan matriks persegi. Ayo coba lagi!");
-                mInput = readMatrixMain();
+                m = readMatrixMain();
             }
+
         } else {
-            mInput = null;
+            m = null;
         }
 
 
+        Matrix mInverse;
         switch (in) {
             case 1:
                 System.out.println("\nMatriks balikan dari matriks tersebut dengan metode reduksi baris adalah: ");
-                if (InverseMat.InverseWithRed(mInput) != null) {
-                    MatrixOperations.displayMatrix(InverseMat.InverseWithRed(mInput));
+                mInverse = InverseMat.InverseWithRed(m);
+                if (mInverse != null) {
+                    MatrixOperations.displayMatrix(mInverse);
                 }
                 BackToMainMenu();
                 break;
             case 2:
                 System.out.println("\nMatriks balikan dari matriks tersebut dengan metode determinan dan adjoin adalah: ");
-                if (InverseMat.InverseWithRed(mInput) != null) {
-                    MatrixOperations.displayMatrix(InverseMat.InverseWithAdjoin(mInput));
+                mInverse = InverseMat.InverseWithRed(m);
+                if (mInverse != null) {
+                    MatrixOperations.displayMatrix(mInverse);
                 }
                 BackToMainMenu();
                 break;
@@ -208,7 +213,7 @@ public class Main {
     }
 
     public static void PolinomInterMenu(){
-        System.out.println("\nInterpolasi polinom.\n");
+        System.out.println("\nInterpolasi polinom.");
 
         System.out.println("\nPilih cara kalian untuk input matrix!\n");
         System.out.printf("""
@@ -231,22 +236,26 @@ public class Main {
         switch (in) {
             case 1:
                 mInput = Interpolation.ReadInterpolationData();
+                Interpolation.PolinomInterpolation(mInput);
+                BackToMainMenu();
                 break;
             case 2:
                 System.out.println("\nMasukkan path ke file yang ingin dibaca: ");
                 String path = MainScanner.sc.next();
                 try {
                     mInput = Converter.readTxt(path);
+                    Interpolation.PolinomInterpolation(mInput);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+
+                BackToMainMenu();
+                break;
             case 0:
                 BackToMainMenu();
             default:
                 throw new IllegalStateException("Unexpected value: " + in);
         }
-
-        Interpolation.PolinomInterpolation(mInput);
     }
 
     public static void BicubicInterMenu(){
@@ -267,7 +276,7 @@ public class Main {
             in = MainScanner.sc.nextInt();
         }
 
-        Matrix mInput;
+        Matrix mInput = null;
 
         switch (in) {
             case 1:
@@ -281,12 +290,13 @@ public class Main {
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
+                break;
             case 0:
                 BackToMainMenu();
             default:
                 throw new IllegalStateException("Unexpected value: " + in);
         }
-
+        
         float inX = mInput.getElmt(4, 0);
         float inY = mInput.getElmt(4, 1);
 
@@ -297,12 +307,13 @@ public class Main {
             }
         }
 
-        Interpolation.BicubicInterpolation(mInput, inX, inY);
+        Interpolation.BicubicInterpolation(mIn, inX, inY);
+        BackToMainMenu();
     }
 
     public static void RegresiMenu(){
         System.out.println("""
-            \nRegresi linear kaya praktikum fisika, tapi yang ini berganda.\n
+            \nRegresi linear kaya praktikum fisika, tapi yang ini berganda.
             """);
 
             System.out.println("\nPilih cara kalian untuk input matrix!\n");
@@ -326,20 +337,15 @@ public class Main {
             switch (in) {
                 case 1:
                     Regression.ReadRegressionData();
+                    BackToMainMenu();
                     break;
                 case 2:
                     System.out.println("\nMasukkan path ke file yang ingin dibaca: ");
                     String path = MainScanner.sc.next();
                     try {
                         mInput = Converter.readTxt(path);
-                        Matrix mInputX = new Matrix(mInput.rowEff - 1, mInput.colEff);
-                        for (int i = 0; i <= mInputX.getLastIdxRow(); i++) {
-                            for (int j = 0; j <= mInputX.getLastIdxCol(); j++) {
-                                mInputX.setElmt(i, j, mInput.getElmt(i, j));
-                            }
-                        }
-
-                        Regression.MultipleLinearRegression(mInputX, mInput.rowEff, mInput.colEff);
+                        Regression.MultipleLinearRegression(mInput, mInput.rowEff, mInput.colEff - 1);
+                        BackToMainMenu();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
