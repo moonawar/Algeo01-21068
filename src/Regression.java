@@ -1,33 +1,5 @@
 public class Regression {
-    MatrixOperations matOps = new MatrixOperations();
-    SPLInverse splInverse = new SPLInverse();
-
-    public static void main(String[] args) {
-        Regression regression = new Regression();
-        regression.MultipleLinearRegression(1);;
-    }
-
-    public void MultipleLinearRegression(int method){
-        System.out.printf("Masukkan jumlah variabel x: ");
-        int n = MainScanner.sc.nextInt();
-        System.out.printf("Masukkan jumlah sampel data: ");
-        int m = MainScanner.sc.nextInt();
-        
-        Matrix mData = new Matrix(m, n+1);
-
-        for (int i = 0; i < m; i++) {
-            System.out.printf("Data sampel %d\n", i+1);
-            for (int j = 0; j < n+1; j++) {
-                if (j == n) {
-                    System.out.printf("Masukkan nilai y-%d: ", i+1);
-                    mData.setElmt(i, j, MainScanner.sc.nextFloat());   
-                } else {
-                    System.out.printf("Masukkan nilai x-%d%d: ", j+1, i+1);
-                    mData.setElmt(i, j, MainScanner.sc.nextFloat());
-                }
-            }
-        }
-
+    public static void MultipleLinearRegression(Matrix mData, int m, int n){
         Matrix mEq = new Matrix(n+1, n+1);
         Matrix mSol = new Matrix(n+1, 1);
 
@@ -74,8 +46,9 @@ public class Regression {
             mSol.setElmt(i, 0, sum);
         }
 
-        // Harusnya pake gauss
-        Matrix mX = splInverse.SPLWithInverse(mEq, mSol);
+        MatrixOperations.displayMatrix(mEq);
+
+        Matrix mX = SPLInverse.SPLWithInverse(mEq, mSol, false);
         
         System.out.println("Persamaan regresi:");
         System.out.printf("f(x) = ");
@@ -98,5 +71,28 @@ public class Regression {
         }
 
         System.out.printf("f(x-k) = %.4f", f_x);
+    }
+
+    public static void ReadRegressionData() {
+        System.out.printf("Masukkan jumlah variabel x: ", new Object[0]);
+        int n = MainScanner.sc.nextInt();
+        System.out.printf("Masukkan jumlah sampel data: ", new Object[0]);
+        int m = MainScanner.sc.nextInt();
+
+        Matrix mInput = new Matrix(m, n + 1);
+        for (int i = 0; i < m; i++) {
+            System.out.printf("Data sampel %d\n", i + 1);
+            for (int j = 0; j < n + 1; j++) {
+                if (j == m) {
+                    System.out.printf("Masukkan nilai y-%d: ", i + 1);
+                    mInput.setElmt(i, j, MainScanner.sc.nextFloat());
+                }
+                else {
+                    System.out.printf("Masukkan nilai x-%d%d: ", j + 1, i + 1);
+                    mInput.setElmt(i, j, MainScanner.sc.nextFloat());
+                }
+            }
+        }
+        MultipleLinearRegression(mInput, m, n);
     }
 }

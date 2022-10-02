@@ -1,24 +1,28 @@
 public class SPLCrammer {
-    public static void cramer(Matrix mat, Matrix nilai, int order){
-    float detcramer = 0;
-    for (int i=0; i< order; i++ ){
-        detcramer = DetCofactor.DeterminanCofaktor(Subscramer(mat,nilai, order, i), order)/DetCofactor.DeterminanCofaktor(mat, order);  
-        System.out.println("x" + (i + 1) + " = " + detcramer);
+    public static void cramer(final Matrix mA, final Matrix mB) {
+        if (DetCofactor.determinanCofactor(mA) == 0.0f || mA.rowEff != mA.colEff) {
+            System.out.println("\nDeterminan Matriks inputnya 0 atau matriks bukan persegi, sehingga matriks tidak dapat diselesaikan dengan metode Cramer");
+        }
+        else {
+            System.out.println("\nSolusi SPL dengan menggunakan metode Cramer:");
+            for (int i = 0; i <= mA.getLastIdxCol(); i++) {
+                System.out.println("x" + (i + 1) + " = " + DetCofactor.determinanCofactor(subsCramer(mA, mB, i)) / DetCofactor.determinanCofactor(mA));
+            }
+        }
     }
-}
-
-    public static Matrix Subscramer(Matrix mat, Matrix nilai ,int order, int replacedcol){
-        Matrix cram = new Matrix(order,order);
-        for (int i=0; i<order; i++){
-            for(int j=0; j<order; j++){
-                 if (j != replacedcol){
-                    cram.mem[i][j] = mat.getElmt(i, j);
+    
+    public static Matrix subsCramer(final Matrix mA, final Matrix mB, final int n) {
+        final Matrix mOut = new Matrix(mA.rowEff, mA.rowEff);
+        for (int i = 0; i <= mA.getLastIdxRow(); i++) {
+            for (int j = 0; j <= mA.getLastIdxCol(); j++) {
+                if (j != n) {
+                    mOut.setElmt(i, j, mA.getElmt(i, j));
                 }
-                else{
-                    cram.mem[i][replacedcol]= nilai.getElmt(i, 0);
+                else {
+                    mOut.setElmt(i, n, mB.getElmt(i, 0));
                 }
             }
         }
-        return cram;
+        return mOut;
     }
 }

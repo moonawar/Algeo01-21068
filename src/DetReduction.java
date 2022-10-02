@@ -1,5 +1,5 @@
 public class DetReduction{
-    public float determinanGauss(Matrix m) {
+    public static float determinanGauss(Matrix m) {
         // mencari determinan dengan metode gauss
         // prekondisi : matriks persegi
         int i, j, k, temp, indent, swapCounter;

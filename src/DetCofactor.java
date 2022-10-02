@@ -1,40 +1,35 @@
 public class DetCofactor {
-    public static void MatrixKecil(Matrix mat, Matrix cofac, int row, int col, int order){  
-               
-    int a = 0;  
-    int b = 0;  
-      
-    for (int i = 0; i < order; i++) { 
-            for (int j = 0; j < order; j++) {  
-                if (j != col && i != row) {  
-                    cofac.mem[a][b] = mat.getElmt(i, j);
-                    b++; 
 
-                    if (b == order - 1) {
-                        b = 0;
-                        a++;
+    public static Matrix ExcludeRowCol(Matrix m, int row, int col){
+        Matrix mExclude = new Matrix(m.rowEff-1, m.colEff-1);
+        int i = 0;
+        int j = 0;
+        for (int k = 0; k <= m.getLastIdxRow(); k++) {
+            for (int l = 0; l <= m.getLastIdxCol(); l++) {
+                if ((k != row) && (l != col)) {
+                    mExclude.setElmt(i, j, m.getElmt(k, l));
+                    j++;
+                    if (j > mExclude.getLastIdxCol()) {
+                        j = 0;
+                        i++;
                     }
-                }  
-            }  
-          
-    }    
-}  
-            
-          
-    public static float DeterminanCofaktor(Matrix m,int order){
-    //2x2
-        if (order == 2){
-            return (m.getElmt(0, 0)*m.getElmt(1, 1))-(m.getElmt(0, 1)*m.getElmt(1, 0));
-        } else {
-            float res = 0;
-            Matrix cofac = new Matrix(order, order);
-            int sign = 1;
-            for (int i = 0; i < order; i++) {
-                MatrixKecil(m, cofac, 0, i, order);
-                res += sign * m.getElmt(0, i) * DeterminanCofaktor(cofac, order - 1);
-                sign = -sign;
+                }
             }
-         return res;
-        }  
+        }
+        return mExclude;
     }
+    
+
+    public static float determinanCofactor(Matrix m){
+        if (m.rowEff == 1) {
+            return m.getElmt(0, 0);
+        } else {
+            float det = 0;
+            for (int i = 0; i <= m.getLastIdxCol(); i++) {
+                det += Math.pow(-1, i) * m.getElmt(0, i) * determinanCofactor(ExcludeRowCol(m, 0, i));
+            }
+            return det;
+        }
+    }
+
 }

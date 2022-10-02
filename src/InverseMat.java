@@ -1,16 +1,5 @@
 public class InverseMat {
-
-
-    // SPLGauss splGauss = new SPLGauss();
-    static MatrixOperations matOps = new MatrixOperations();
-
-    public static void main(String[] args) {
-        InverseMat inverseMat = new InverseMat();
-        Matrix x = inverseMat.InverseWithAdjoin(matOps.readMatrix());
-        matOps.displayMatrix(x);
-    }
-
-    private void swapRow(Matrix m, int row1, int row2){
+    private static void swapRow(Matrix m, int row1, int row2){
         for (int i = 0; i <= m.getLastIdxCol(); i++) {
             float temp = m.getElmt(row1, i);
             m.setElmt(row1, i, m.getElmt(row2, i));
@@ -18,7 +7,7 @@ public class InverseMat {
         }
     }
 
-    private void sortRow(Matrix m, Matrix mAug){
+    private static void sortRow(Matrix m, Matrix mAug){
         for (int i = 0; i <= m.getLastIdxRow()-1; i++) {
             for (int j = 0; j <= m.getLastIdxRow()-1-i; j++) {
                 int k = 0;
@@ -34,15 +23,15 @@ public class InverseMat {
         }
     }
 
-    public Matrix InverseWithRed(Matrix m){
-        // if (splGauss.gauss(m) == 0) {
-        //     System.out.println("Inverse matrix doesn't exist");
-        //     return m;
-        // } else {
-            
-        // }
-        Matrix mAug = matOps.IdentityMatrix(m.rowEff);
+    public static Matrix InverseWithRed(Matrix m){
+        if (DetCofactor.determinanCofactor(m) == 0.0f || m.rowEff != m.colEff) {
+            System.out.println("\nMatriks tidak memilki invers");
+            return null;
+        }
+
         
+        Matrix mAug = MatrixOperations.IdentityMatrix(m.rowEff);
+
         sortRow(m, mAug);
 
         // Do Gauss Reduction for both Matrix Input and Matrix Identity
@@ -56,7 +45,6 @@ public class InverseMat {
             }
             sortRow(m, mAug);
         }
-
         // For each row, normalize the diagonal element to 1
         for (int i = 0; i <= m.getLastIdxRow(); i++) {
             float normalizer = 1 / m.getElmt(i, i);
@@ -80,11 +68,11 @@ public class InverseMat {
         return mAug;
     } 
 
-    public Matrix MatCofactor(Matrix m){        
+    public static Matrix MatCofactor(Matrix m){        
         Matrix mOut = new Matrix(m.rowEff, m.colEff);
         for (int i = 0; i <= m.getLastIdxRow(); i++) {
             for (int j = 0; j <= m.getLastIdxCol(); j++) {
-                float minorDet = determinanCofactor(ExcludeRowCol(m, i, j));
+                float minorDet = DetCofactor.determinanCofactor(DetCofactor.ExcludeRowCol(m, i, j));
                 float x;
                 if (minorDet == 0) {
                     x = 0;
@@ -99,38 +87,8 @@ public class InverseMat {
         return mOut;
     }
 
-    public float determinanCofactor(Matrix m){
-        if (m.rowEff == 1) {
-            return m.getElmt(0, 0);
-        } else {
-            float det = 0;
-            for (int i = 0; i <= m.getLastIdxCol(); i++) {
-                det += Math.pow(-1, i) * m.getElmt(0, i) * determinanCofactor(ExcludeRowCol(m, 0, i));
-            }
-            return det;
-        }
-    }
 
-    public Matrix ExcludeRowCol(Matrix m, int row, int col){
-        Matrix mExclude = new Matrix(m.rowEff-1, m.colEff-1);
-        int i = 0;
-        int j = 0;
-        for (int k = 0; k <= m.getLastIdxRow(); k++) {
-            for (int l = 0; l <= m.getLastIdxCol(); l++) {
-                if ((k != row) && (l != col)) {
-                    mExclude.setElmt(i, j, m.getElmt(k, l));
-                    j++;
-                    if (j > mExclude.getLastIdxCol()) {
-                        j = 0;
-                        i++;
-                    }
-                }
-            }
-        }
-        return mExclude;
-    }
-
-    public Matrix transposeMat(Matrix m){
+    public static Matrix transposeMat(Matrix m){
         Matrix mTranspose = new Matrix(m.colEff, m.rowEff);
         for (int i = 0; i <= m.getLastIdxRow(); i++) {
             for (int j = 0; j <= m.getLastIdxCol(); j++) {
@@ -140,7 +98,7 @@ public class InverseMat {
         return mTranspose;
     }
 
-    public Matrix multiplyMatConst(Matrix m, float c){
+    public static Matrix multiplyMatConst(Matrix m, float c){
         Matrix mOut = new Matrix(m.rowEff, m.colEff);
         
         for (int i = 0; i <= m.getLastIdxRow(); i++) {
@@ -151,14 +109,16 @@ public class InverseMat {
         return mOut;
     }
 
-    public Matrix InverseWithAdjoin(Matrix m){
+    public static Matrix InverseWithAdjoin(Matrix m){
         Matrix mOut;
         Matrix adjoin = transposeMat(MatCofactor(m));
-        if (determinanCofactor(m) == 0) {
-            System.out.println("Inverse matrix doesn't exist");
+        MatrixOperations.displayMatrix(m);
+        if (DetCofactor.determinanCofactor(m) == 0) {
+            System.out.println("\nMatriks tidak memilki invers");
             return null;
         } else {
-            mOut = multiplyMatConst(adjoin, 1 / determinanCofactor(m));
+
+            mOut = multiplyMatConst(adjoin, 1 / DetCofactor.determinanCofactor(m));
             return mOut;
         }
     }

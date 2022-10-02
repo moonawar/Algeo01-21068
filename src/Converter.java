@@ -68,7 +68,7 @@ public class Converter {
         return size;
     }
 
-    public Matrix matrixToAugmented (Matrix a, Matrix b) {
+    public static Matrix matrixToAugmented (Matrix a, Matrix b) {
         Matrix m = new Matrix(a.rowEff, a.colEff + 1);
         for (int i = 0; i <= a.getLastIdxRow(); ++i) {
             for (int j = 0; j <= a.getLastIdxCol() + 1; ++j) {
@@ -82,20 +82,16 @@ public class Converter {
         return m;
     }
 
-    public Matrix augmentedToMatrix (Matrix m, boolean A) {
+    public static Matrix augmentedToMatrix (Matrix m, boolean A) {
         // Ax = B
         // if (A), maka fungsi mengembalikan A
         // if (!A) maka fungsi mengembalikan B
 
         if (A) {
             Matrix m1 = new Matrix(m.rowEff, m.colEff - 1);
-            for (int i = 0; i <= m1.getLastIdxRow(); ++i) {
-                for (int j = 0; j <= m1.getLastIdxCol(); ++j) {
-                    if (j == m1.getLastIdxCol()) {
-                        m1.setElmt(i, j, m.getElmt(i, 0));
-                    } else {
-                        m1.setElmt(i, j, m.getElmt(i, j));
-                    }
+            for (int i = 0; i <= m1.getLastIdxRow(); i++) {
+                for (int j = 0; j <= m1.getLastIdxCol(); j++) {
+                    m1.setElmt(i, j, m.getElmt(i, j));
                 }
             }
             return m1;

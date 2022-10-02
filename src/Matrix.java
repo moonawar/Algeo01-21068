@@ -34,4 +34,8 @@ public class Matrix {
     public int NbElmt() {
         return (this.rowEff * this.colEff);
     }
+
+    public boolean isSquare() {
+        return (this.rowEff == this.colEff);
+    }
 }
