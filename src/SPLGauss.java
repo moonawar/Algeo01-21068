@@ -293,6 +293,7 @@ public class SPLGauss {
         int tempASCII;
         String currentWord = "";
         String end = "";
+        String tempString = "";
         char test;
         float temp;
         float[] equation;
@@ -308,6 +309,11 @@ public class SPLGauss {
 
         while (i <= s.length()-1) {
             if (s.charAt(i) == ' ' || i == s.length()-1) {
+                if (currentWord.length() == 0) {
+                    ++i;
+                    continue;
+                }
+
                 if (i == s.length()-1) {
                     currentWord = currentWord.concat(String.valueOf(s.charAt(i)));
                 }
@@ -315,8 +321,11 @@ public class SPLGauss {
                 if ((currentWord.charAt(0) == '-' || currentWord.charAt(0) == '+') && currentWord.length() == 1) {
                     ++i;
                     continue;
+                } else if (currentWord.length() == 2 && ((currentWord.charAt(0) == '-' && currentWord.charAt(1) == '+') || currentWord.charAt(0) == '+' && currentWord.charAt(1) == '-')) {
+                    ++i;
+                    continue;
                 } else {
-                    if (currentWord.charAt(currentWord.length()-1) != 'd') {
+                    if (currentWord.charAt(currentWord.length()-1) != 'd' && currentWord.charAt(currentWord.length()-1) != 'f') {
                         try {
                             temp = Float.parseFloat(currentWord);
                             equation[length] += temp;
@@ -334,12 +343,19 @@ public class SPLGauss {
                                 }
                             } 
                             else {
-                                currentWord = currentWord.substring(0, currentWord.length()-1);
-                                temp = Float.parseFloat(currentWord);
-                                equation[tempASCII-97] += temp;
+                                if ((currentWord.charAt(0) == '-' && currentWord.charAt(1) == '+') || (currentWord.charAt(0) == '+' && currentWord.charAt(1) == '-')) {
+                                    tempString = "-";
+                                    currentWord = currentWord.substring(2, currentWord.length()-1);
+                                    tempString = tempString.concat(currentWord);
+                                    temp = Float.parseFloat(tempString);
+                                    equation[tempASCII-97] += temp;
+                                } else {
+                                    currentWord = currentWord.substring(0, currentWord.length()-1);
+                                    temp = Float.parseFloat(currentWord);
+                                    equation[tempASCII-97] += temp;
+                                }   
                             }
                             currentWord = "";
-                            
                         }
                     } else {
                         tempASCII = currentWord.charAt(currentWord.length()-1);
@@ -353,9 +369,17 @@ public class SPLGauss {
                             }
                         } 
                         else {
-                            currentWord = currentWord.substring(0, currentWord.length()-1);
-                            temp = Float.parseFloat(currentWord);
-                            equation[tempASCII-97] += temp;
+                            if ((currentWord.charAt(0) == '-' && currentWord.charAt(1) == '+') || (currentWord.charAt(0) == '+' && currentWord.charAt(1) == '-')) {
+                                tempString = "-";
+                                currentWord = currentWord.substring(2, currentWord.length()-1);
+                                tempString = tempString.concat(currentWord);
+                                temp = Float.parseFloat(tempString);
+                                equation[tempASCII-97] += temp;
+                            } else {
+                                currentWord = currentWord.substring(0, currentWord.length()-1);
+                                temp = Float.parseFloat(currentWord);
+                                equation[tempASCII-97] += temp;
+                            }   
                         }
                         currentWord = "";
                     }
