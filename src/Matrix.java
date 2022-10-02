@@ -38,4 +38,15 @@ public class Matrix {
     public boolean isSquare() {
         return (this.rowEff == this.colEff);
     }
+
+    public Matrix copyMatrix(){
+        Matrix mOut = new Matrix(this.rowEff, this.colEff);
+        for (int i = 0; i <= this.getLastIdxRow(); i++) {
+            for (int j = 0; j <= this.getLastIdxCol(); j++) {
+                mOut.setElmt(i, j, this.getElmt(i, j));
+            }
+        }
+
+        return mOut;
+    }
 }

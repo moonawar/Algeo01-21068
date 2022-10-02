@@ -98,7 +98,6 @@ public class Interpolation {
                 row++;
             }
         }
-        
         Matrix y = new Matrix(16, 1);
         row = 0;
         for (int j = 0; j <= m.getLastIdxCol(); j++) {
@@ -107,12 +106,12 @@ public class Interpolation {
                 row++;
             }
         }
+        
         Matrix XInverse = InverseMat.InverseWithRed(X);
         Matrix a = MatrixOperations.multiplyMatrix(XInverse, y);
 
         row = 0;
         float f_xy = 0;
-        
         for (int j = 0; j <= 3; j++) {
             for (int i = 0; i <= 3; i++) {
                 f_xy += a.getElmt(row, 0) * (float) Math.pow(inX, i) * (float) Math.pow(inY, j);
@@ -139,7 +138,7 @@ public class Interpolation {
             """
                 );
 
-        for (int i = 0; i <= m.getLastIdxRow(); i++) {
+        for (int i = 0; i <= m.getLastIdxRow() - 1; i++) {
             for (int j = 0; j <= m.getLastIdxCol(); j++) {
                 m.setElmt(i, j, MainScanner.sc.nextFloat());
             }

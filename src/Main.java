@@ -248,6 +248,7 @@ public class Main {
                     Interpolation.PolinomInterpolation(mInput);
                 } catch (FileNotFoundException e) {
                     System.out.println("\nFile tidak ditemukan");
+                    BackToMainMenu(); break;
                 }
 
                 BackToMainMenu();
@@ -290,6 +291,7 @@ public class Main {
                     mInput = Converter.readTxt(path);
                 } catch (FileNotFoundException e) {
                     System.out.println("\nFile tidak ditemukan");
+                    BackToMainMenu(); break;
                 }
                 break;
             case 0:
@@ -349,6 +351,7 @@ public class Main {
                         BackToMainMenu();
                     } catch (FileNotFoundException e) {
                         System.out.println("\nFile tidak ditemukan");
+                        BackToMainMenu(); break;
                     }
                 case 0:
                     BackToMainMenu();
@@ -418,6 +421,7 @@ public class Main {
                     return mOut;
                 } catch (FileNotFoundException e) {
                     System.out.println("\nFile tidak ditemukan");
+                    return null;
                 }
             case 0:
                 BackToMainMenu();
@@ -458,6 +462,7 @@ public class Main {
                         return mOut;
                     } catch (FileNotFoundException e) {
                         System.out.println("\nFile tidak ditemukan");
+                        return null;
                     }
                 case 0:
                     BackToMainMenu();
