@@ -3,12 +3,12 @@
 ## Deskripsi Program 🖥️
 Program ini dibuat untuk memenuhi tugas mata kuliah IF2123 Aljabar Linear dan Geometri tahun ajaran 2022/2023. Program ini memiliki beberapa fungsionalitas khusus yang dapat digunakan untuk menyelesaikan beberapa permasalahan dengan matriks dan dibuat dengan Bahasa Java. Program ini memiliki 6 Fitur:
 
-      1. Menyelesaikan Persamaan Linier *(4 metode)*
-      2. Menyelesaikan Determinan Matriks *(2 metode)*
-      3. Menentukan Inverse Matriks *(2 metode)*
-      4. Melakukan Interpolasi Polinom
-      5. Melakukan Interpolasi Bicubic
-      6. Melakukan Regresi Linier Berganda
+   1. Menyelesaikan Persamaan Linier *(4 metode)*
+   2. Menyelesaikan Determinan Matriks *(2 metode)*
+   3. Menentukan Inverse Matriks *(2 metode)*
+   4. Melakukan Interpolasi Polinom
+   5. Melakukan Interpolasi Bicubic
+   6. Melakukan Regresi Linier Berganda
 
 ## Struktur Direktori
 Program ini memiliki 4 folder<br>
