@@ -29,12 +29,12 @@ Program ini memiliki 4 folder<br>
   3. Cara menjalankan code dengan
        - Menjalankan bytecode Main
          ```
-         cd ../bin
+         cd bin
          java Main
          ```
        - Menjalankan file Main.jar
          ```
-         cd ../bin
+         cd bin
          java -jar Algeo01-21068.jar
          ```
   4. Untuk membaca input dari file, user akan diminta untuk memasukkan path ke file input yang ingin dibaca. Secara default, file input akan diletakkan di folder test. Maka dari itu, path ke file tersebut kita tuliskan dengan
