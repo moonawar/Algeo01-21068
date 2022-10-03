@@ -1,7 +1,9 @@
 public class SPLInverse {
     public static Matrix SPLWithInverse(Matrix mA, Matrix mB, boolean isOutputting){
+        /*KAMUS*/
         Matrix mAinit = mA;
         Matrix mInvA = InverseMat.InverseWithRed(mA);
+        /*ALGORITMA*/
         if (mInvA == null || DetReduction.determinanGauss(mAinit) == 0.0f) {
             System.out.println("Matriks ini tidak memilki invers, sehingga SPL tidak dapat diselesaikan dengan metode ini");
             return null;
@@ -20,6 +22,7 @@ public class SPLInverse {
     }
 
     public static Solution SolutionWithInverse(Matrix mA, Matrix mB, boolean isOutputting){
+        /*KAMUS*/
         Matrix mSol = SPLWithInverse(mA, mB, isOutputting);
 
         boolean state = true;
@@ -27,6 +30,7 @@ public class SPLInverse {
         float[] hasil = new float[mSol.getLastIdxCol()];
         Solution sol = new Solution(hasil, listVarMat, state);
 
+        /*ALGORITMA*/
         if (sol == null) {
             sol.setState(false);
             return sol;
