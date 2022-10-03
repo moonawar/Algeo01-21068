@@ -1,5 +1,6 @@
 public class InverseMat {
     private static void swapRow(Matrix m, int row1, int row2){
+        /*ALGORITMA*/
         for (int i = 0; i <= m.getLastIdxCol(); i++) {
             float temp = m.getElmt(row1, i);
             m.setElmt(row1, i, m.getElmt(row2, i));
@@ -8,6 +9,7 @@ public class InverseMat {
     }
 
     private static void sortRow(Matrix m, Matrix mAug){
+        /*ALGORITMA*/
         for (int i = 0; i <= m.getLastIdxRow()-1; i++) {
             for (int j = 0; j <= m.getLastIdxRow()-1-i; j++) {
                 int k = 0;
@@ -24,8 +26,11 @@ public class InverseMat {
     }
 
     public static Matrix InverseWithRed(Matrix m){
+        /*KAMUS*/
         Matrix mTemp = m.copyMatrix();
         float det = DetReduction.determinanGauss(mTemp);
+        
+        /*ALGORITMA*/
         if (det == 0.0f || m.rowEff != m.colEff) {
             System.out.println("\nMatriks tidak memilki invers");
             return null;
@@ -70,7 +75,10 @@ public class InverseMat {
     } 
 
     public static Matrix MatCofactor(Matrix m){        
+        /*KAMUS*/
         Matrix mOut = new Matrix(m.rowEff, m.colEff);
+        
+        /*ALGORITMA*/
         for (int i = 0; i <= m.getLastIdxRow(); i++) {
             for (int j = 0; j <= m.getLastIdxCol(); j++) {
                 float minorDet = DetReduction.determinanGauss(DetCofactor.ExcludeRowCol(m, i, j));
@@ -90,7 +98,10 @@ public class InverseMat {
 
 
     public static Matrix transposeMat(Matrix m){
+        /*KAMUS*/
         Matrix mTranspose = new Matrix(m.colEff, m.rowEff);
+        
+        /*ALGORITMA*/
         for (int i = 0; i <= m.getLastIdxRow(); i++) {
             for (int j = 0; j <= m.getLastIdxCol(); j++) {
                 mTranspose.setElmt(j, i, m.getElmt(i, j));
@@ -100,8 +111,10 @@ public class InverseMat {
     }
 
     public static Matrix multiplyMatConst(Matrix m, float c){
+        /*KAMUS*/
         Matrix mOut = new Matrix(m.rowEff, m.colEff);
         
+        /*ALGORITMA*/
         for (int i = 0; i <= m.getLastIdxRow(); i++) {
             for (int j = 0; j <= m.getLastIdxCol(); j++) {
                 mOut.setElmt(i, j, m.getElmt(i, j)*c);
@@ -111,9 +124,12 @@ public class InverseMat {
     }
 
     public static Matrix InverseWithAdjoin(Matrix m){
+        /*KAMUS*/
         Matrix mOut;
         Matrix adjoin = transposeMat(MatCofactor(m));
         Matrix mCopy = m.copyMatrix();
+        
+        /*ALGORITMA*/
         if (DetReduction.determinanGauss(mCopy) == 0) {
             System.out.println("\nMatriks tidak memilki invers");
             return null;
