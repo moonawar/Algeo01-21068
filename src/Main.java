@@ -150,14 +150,16 @@ public class Main {
             mInput = null;
         }
 
-
+        float det;
         switch (in) {
             case 1:
-                System.out.println("\nDeterminan dari matriks tersebut dengan metode reduksi baris adalah: " + DetReduction.determinanGauss(mInput));
+                det = DetReduction.determinanGauss(mInput);
+                System.out.println("\nDeterminan dari matriks tersebut dengan metode reduksi baris adalah: " + det);
                 BackToMainMenu();
                 break;
             case 2:
-                System.out.println("\nDeterminan dari matriks tersebut dengan metode ekspansi kofaktor adalah: " + DetReduction.determinanGauss(mInput));
+                det = DetCofactor.determinanCofactor(mInput);
+                System.out.println("\nDeterminan dari matriks tersebut dengan metode ekspansi kofaktor adalah: " + det);
                 BackToMainMenu();
                 break;
             case 0:
@@ -478,6 +480,31 @@ public class Main {
                 return null;
             default:
                 throw new IllegalStateException("Unexpected value: " + in);
+        } 
+    }
+
+    public static void SimpanSPLKeFile(Solution sol){
+        System.out.println("\nApakah kamu ingin menyimpan output ke file?\n");
+
+        System.out.printf("Pilih (Pilihan y/n): ");
+        String in = MainScanner.sc.next();
+
+        while (!in.equals("y") && !in.equals("n")) {
+            System.out.printf("\nInput tidak valid. Masukkan kembali: ");
+            in = MainScanner.sc.next();
+        }
+
+        if (in.equals("y")) {
+            System.out.printf("""
+
+                Masukkan nama file (file akan tersimpan pada folder ../test/output/<namafile>.txt):
+                """);
+            String path = "../test/output/" + MainScanner.sc.next();
+
+            System.out.println("\nMenyimpan file...");
+            int lastIdx = sol.listVarMat.length -1;
+            Converter.saveFileSPL(path, sol, lastIdx);
+            System.out.println("File berhasil tersimpan (poggers)");
         } 
     }
 
