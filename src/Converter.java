@@ -7,12 +7,10 @@ import java.util.Scanner; // Import the Scanner class to read text files
 public class Converter {
     public static Matrix readTxt(String filename) throws FileNotFoundException{
         /* KAMUS */
-        int baris, kolom, j, tempASCII;
+        int baris, j;
         int[] size;
         String[] elemen;
         Matrix m;
-        char tempchar;
-        String temp;
 
         /* ALGORITMA */
         size = prereadTxt(filename);
@@ -149,17 +147,17 @@ public class Converter {
             }
 
             FileWriter write = new FileWriter(filename);
-            PrintWriter output = new PrintWriter(write);
-
-            if (sol.getState()) {
-                for (j = 0; j <= lastIdx-1; j++) {
-                    output.printf("x%d = %s\n", (j + 1), sol.getVar(j));
+            try (PrintWriter output = new PrintWriter(write)) {
+                if (sol.getState()) {
+                    for (j = 0; j <= lastIdx-1; j++) {
+                        output.printf("x%d = %s\n", (j + 1), sol.getVar(j));
+                    }
+                } else {
+                    output.printf("SPL tersebut tidak miliki solusi\n");
                 }
-            } else {
-                output.printf("SPL tersebut tidak miliki solusi\n");
-            }
 
-            output.close();
+                output.close();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

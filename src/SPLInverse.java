@@ -30,15 +30,9 @@ public class SPLInverse {
         float[] hasil = new float[mSol.getLastIdxCol()];
         Solution sol = new Solution(hasil, listVarMat, state);
 
-        /*ALGORITMA*/
-        if (sol == null) {
-            sol.setState(false);
-            return sol;
-        } else {
-            for (int i = 0; i <= mSol.getLastIdxRow(); i++) {
-                sol.setHasil(i, mSol.getElmt(i, 0));
-                sol.setVar(i, String.valueOf(mSol.getElmt(i, 0)));
-            }
+        for (int i = 0; i <= mSol.getLastIdxRow(); i++) {
+            sol.setHasil(i, mSol.getElmt(i, 0));
+            sol.setVar(i, String.valueOf(mSol.getElmt(i, 0)));
         }
 
         return sol;

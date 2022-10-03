@@ -259,7 +259,7 @@ public class SPLGauss {
     public static void rapihkanSPL(Solution sol, int j) {
         /* KAMUS */
         String temp, temp2;
-        int panjang, tempASCII;
+        int panjang;
         char tempChar;
 
         /* ALGORITMA */
@@ -315,7 +315,6 @@ public class SPLGauss {
         String currentWord = "";
         String end = "";
         String tempString = "";
-        char test;
         float temp;
         float[] equation;
         String[] variableList;

@@ -21,7 +21,7 @@ public class SPLCrammer {
     public static Solution crammerSPL(Matrix m) {
         /* KAMUS */
         Matrix mA, mB, temp, tempMA;
-        int i, j;
+        int j;
         float determinan, determinanAwal;
         boolean state = true;
         String[] listVarMat = new String[m.getLastIdxCol()];
