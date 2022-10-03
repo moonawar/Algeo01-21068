@@ -18,4 +18,25 @@ public class SPLInverse {
             return mX;
         }
     }
+
+    public static Solution SolutionWithInverse(Matrix mA, Matrix mB, boolean isOutputting){
+        Matrix mSol = SPLWithInverse(mA, mB, isOutputting);
+
+        boolean state = true;
+        String[] listVarMat = new String[mSol.getLastIdxCol()];
+        float[] hasil = new float[mSol.getLastIdxCol()];
+        Solution sol = new Solution(hasil, listVarMat, state);
+
+        if (sol == null) {
+            sol.setState(false);
+            return sol;
+        } else {
+            for (int i = 0; i <= mSol.getLastIdxRow(); i++) {
+                sol.setHasil(i, mSol.getElmt(i, 0));
+                sol.setVar(i, String.valueOf(mSol.getElmt(i, 0)));
+            }
+        }
+
+        return sol;
+    }
 }

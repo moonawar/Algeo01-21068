@@ -1,4 +1,6 @@
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
@@ -90,20 +92,26 @@ public class Main {
                 solution = SPLGauss.gaussSPL(mInput);
                 System.out.println("\nSolusi SPL dengan metode eliminasi Gauss:");
                 Solution.displaySolution(solution, mInput);
+                SimpanSPLKeFile(solution);
                 BackToMainMenu();
                 break;
             case 2:
                 solution = SPLGauss.gaussJordanSPL(mInput);
                 System.out.println("\nSolusi SPL dengan metode eliminasi Gauss-Jordan:");
                 Solution.displaySolution(solution, mInput);
+                SimpanSPLKeFile(solution);
                 BackToMainMenu();
                 break;
             case 3:
-                SPLInverse.SPLWithInverse(Converter.augmentedToMatrix(mInput, true), Converter.augmentedToMatrix(mInput, false), true);
+                solution = SPLInverse.SolutionWithInverse(Converter.augmentedToMatrix(mInput, true), Converter.augmentedToMatrix(mInput, false), false);
+                Solution.displaySolution(solution, mInput);
+                SimpanSPLKeFile(solution);
                 BackToMainMenu();
                 break;
             case 4:
-                SPLCrammer.cramer(Converter.augmentedToMatrix(mInput, true), Converter.augmentedToMatrix(mInput, false));
+                solution = SPLCrammer.crammerSPL(mInput);
+                Solution.displaySolution(solution, mInput);
+                SimpanSPLKeFile(solution);
                 BackToMainMenu();
                 break;
             case 0:
@@ -421,6 +429,7 @@ public class Main {
                     return mOut;
                 } catch (FileNotFoundException e) {
                     System.out.println("\nFile tidak ditemukan");
+                    BackToMainMenu();
                     return null;
                 }
             case 0:
@@ -431,44 +440,69 @@ public class Main {
         }
     }
 
-        public static Matrix readMatrixMain(){
-            System.out.println("\nPilih cara kalian untuk input matrix!\n");
-            System.out.printf("""
-                                PILIHAN METODE INPUT MATRIX
-            (1) Melalui keyboard
-            (2) Melalui File
-    
-            (0) Kembali ke menu utama
-            """);
-            System.out.printf("Ayo dipilih.. (Pilihan 0-2): ");
-            int in = MainScanner.sc.nextInt();
-    
-            while (in < 0 || in > 2){
-                System.out.printf("Punten, pilihannya masih salah. Ayo coba lagi (Pilihan 0-2): ");
-                in = MainScanner.sc.nextInt();
-            }
-    
-            Matrix mOut;
-    
-            switch (in) {
-                case 1:
-                    mOut = MatrixOperations.readMatrix();
+    public static Matrix readMatrixMain(){
+        System.out.println("\nPilih cara kalian untuk input matrix!\n");
+        System.out.printf("""
+                            PILIHAN METODE INPUT MATRIX
+        (1) Melalui keyboard
+        (2) Melalui File
+
+        (0) Kembali ke menu utama
+        """);
+        System.out.printf("Ayo dipilih.. (Pilihan 0-2): ");
+        int in = MainScanner.sc.nextInt();
+
+        while (in < 0 || in > 2){
+            System.out.printf("Punten, pilihannya masih salah. Ayo coba lagi (Pilihan 0-2): ");
+            in = MainScanner.sc.nextInt();
+        }
+
+        Matrix mOut;
+
+        switch (in) {
+            case 1:
+                mOut = MatrixOperations.readMatrix();
+                return mOut;
+            case 2:
+                System.out.println("\nMasukkan path ke file yang ingin dibaca: ");
+                String path = MainScanner.sc.next();
+                try {
+                    mOut = Converter.readTxt(path);
                     return mOut;
-                case 2:
-                    System.out.println("\nMasukkan path ke file yang ingin dibaca: ");
-                    String path = MainScanner.sc.next();
-                    try {
-                        mOut = Converter.readTxt(path);
-                        return mOut;
-                    } catch (FileNotFoundException e) {
-                        System.out.println("\nFile tidak ditemukan");
-                        return null;
-                    }
-                case 0:
-                    BackToMainMenu();
+                } catch (FileNotFoundException e) {
+                    System.out.println("\nFile tidak ditemukan");
                     return null;
-                default:
-                    throw new IllegalStateException("Unexpected value: " + in);
-            } 
+                }
+            case 0:
+                BackToMainMenu();
+                return null;
+            default:
+                throw new IllegalStateException("Unexpected value: " + in);
+        } 
+    }
+
+    public static void SimpanSPLKeFile(Solution sol){
+        System.out.println("\nApakah kamu ingin menyimpan output ke file?\n");
+
+        System.out.printf("Pilih (Pilihan y/n): ");
+        String in = MainScanner.sc.next();
+
+        while (!in.equals("y") && !in.equals("n")) {
+            System.out.printf("\nInput tidak valid. Masukkan kembali: ");
+            in = MainScanner.sc.next();
+        }
+
+        if (in.equals("y")) {
+            System.out.printf("""
+
+                Masukkan nama file (file akan tersimpan pada folder ../test/output/<namafile>.txt):
+                """);
+            String path = "../test/output/" + MainScanner.sc.next();
+
+            System.out.println("\nMenyimpan file...");
+            int lastIdx = sol.listVarMat.length -1;
+            Converter.saveFileSPL(path, sol, lastIdx);
+            System.out.println("File berhasil tersimpan (poggers)");
+        } 
     }
 }

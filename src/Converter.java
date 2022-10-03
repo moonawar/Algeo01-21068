@@ -129,7 +129,7 @@ public class Converter {
         }
     }
 
-    public static void saveFileSPL(String filename, Solution sol, Matrix m) {
+    public static void saveFileSPL(String filename, Solution sol, int lastIdx){
         try {
             int j;
 
@@ -142,7 +142,7 @@ public class Converter {
             PrintWriter output = new PrintWriter(write);
 
             if (sol.getState()) {
-                for (j = 0; j <= m.getLastIdxCol()-1; j++) {
+                for (j = 0; j <= lastIdx-1; j++) {
                     output.printf("x%d = %s\n", (j + 1), sol.getVar(j));
                 }
             } else {
