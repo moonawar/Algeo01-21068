@@ -1,12 +1,12 @@
 public class DetCofactor {
 
     public static Matrix ExcludeRowCol(Matrix m, int row, int col){
-        /*Kamus*/
+        /*KAMUS*/
         Matrix mExclude = new Matrix(m.rowEff-1, m.colEff-1);
         int i = 0;
         int j = 0;
         
-        /*Algoritma*/
+        /*ALGORITMA*/
         for (int k = 0; k <= m.getLastIdxRow(); k++) {
             for (int l = 0; l <= m.getLastIdxCol(); l++) {
                 if ((k != row) && (l != col)) {
@@ -24,7 +24,7 @@ public class DetCofactor {
     
 
     public static float determinanCofactor(Matrix m){
-        /*Algoritma*/
+        /*ALGORITMA*/
         if (m.rowEff == 1) {
             return m.getElmt(0, 0);
         } else {
