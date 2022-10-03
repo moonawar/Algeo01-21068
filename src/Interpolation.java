@@ -1,8 +1,10 @@
 public class Interpolation {
     public static void PolinomInterpolation(Matrix mData){
+        /*Kamus*/
         Matrix mA = new Matrix(mData.rowEff, mData.rowEff);
         Matrix mB = new Matrix(mData.rowEff, 1);
 
+        /*Algoritma*/
         for (int i = 0; i < mData.rowEff; i++) {
             for (int j = 0; j < mData.rowEff; j++) {
                 mA.setElmt(i, j, (float) Math.pow(mData.getElmt(i, 0), j));
@@ -57,11 +59,14 @@ public class Interpolation {
 
 
     public static Matrix ReadInterpolationData() {
+        /*Kamus*/
         System.out.printf("\nMasukkan jumlah data poin: ");
         int n = MainScanner.sc.nextInt();
 
         Matrix mData = new Matrix(n, 2);
+        
 
+        /*Algoritma*/
         System.out.println("""
             Masukkan masing-masing data poin format \"x y\":
             Contoh untuk 3 buah data poin:: 
@@ -84,8 +89,11 @@ public class Interpolation {
     }
 
     public static void BicubicInterpolation(Matrix m, float inX, float inY){
+        /*Kamus*/
         Matrix X = new Matrix(16, 16);
         int row = 0;
+        
+        /*Algoritma*/
         for (int y = -1; y <= 2; y++) {
             for (int x = -1; x <= 2; x++) {
                 int col = 0;
@@ -123,7 +131,10 @@ public class Interpolation {
     }
 
     public static Matrix ReadBicubicMatrix() {
+        /*Kamus*/
         Matrix m = new Matrix(5, 4);
+        
+        /*Algoritma*/
         System.out.printf("""
             Cara input elemen matriks:    
             Input elemen dengan memasukkan baris per baris. Untuk kolom, setiap elemen dipisahkan dengan spasi.    
