@@ -47,9 +47,7 @@ public class Regression {
             }
             mSol.setElmt(i, 0, sum);
         }
-
-        MatrixOperations.displayMatrix(mEq);
-
+        
         Matrix mX = SPLInverse.SPLWithInverse(mEq, mSol, false);
         String output = "";
 
