@@ -1,6 +1,7 @@
 public class MatrixOperations {
     
     public static Matrix readMatrix(){
+        /*KAMUS*/
         int nRow, nCol;
         System.out.printf("\nMasukkan jumlah baris: ");
         nRow = MainScanner.sc.nextInt();
@@ -8,6 +9,8 @@ public class MatrixOperations {
         nCol = MainScanner.sc.nextInt();
 
         Matrix m = new Matrix(nRow, nCol);
+        
+        /*ALGORITMA*/
         System.out.printf("""
             
             Cara input elemen matriks:    
@@ -33,6 +36,7 @@ public class MatrixOperations {
     }
 
     public static Matrix readSPL(){
+        /*KAMUS*/
         int nRow, nCol;
         System.out.printf("\nMasukkan jumlah persamaan: ");
         nRow = MainScanner.sc.nextInt();
@@ -40,7 +44,9 @@ public class MatrixOperations {
         nCol = MainScanner.sc.nextInt();
 
         Matrix m = new Matrix(nRow, nCol + 1);
+        
 
+        /*ALGORITMA*/
         for (int i = 0; i <= m.getLastIdxRow(); i++) {
             System.out.println("\nPersamaan ke-" + (i+1));
             for (int j = 0; j <= m.getLastIdxCol(); j++) {
@@ -57,6 +63,7 @@ public class MatrixOperations {
     }
 
     public static void displayMatrix(Matrix m){
+        /*ALGORITMA*/
         for (int i = 0; i <= m.getLastIdxRow(); i++) {
             for (int j = 0; j <= m.getLastIdxCol(); j++) {
                 System.out.printf("%.4f ", m.getElmt(i, j));
@@ -66,8 +73,10 @@ public class MatrixOperations {
     }
 
     public static Matrix multiplyMatrix(Matrix m1, Matrix m2){
+        /*KAMUS*/
         Matrix mOut = new Matrix(m1.rowEff, m2.colEff);
 
+        /*ALGORITMA*/
         for (int i = 0; i <= mOut.getLastIdxRow(); i++) {
             for (int j = 0; j <= mOut.getLastIdxCol(); j++) {
                 float sum = 0f;
@@ -82,7 +91,9 @@ public class MatrixOperations {
     }
 
     public static Matrix IdentityMatrix(int size){
+        /*KAMUS*/
         Matrix MIdentity = new Matrix(size, size);
+        /*ALGORITMA*/
         for (int i = 0; i <= MIdentity.getLastIdxRow(); i++)
             MIdentity.setElmt(i, i, 1.0f);
 

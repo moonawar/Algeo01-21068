@@ -5,9 +5,12 @@ public class Matrix {
     public float[][] mem;
 
     public Matrix(int nRow, int nCol){
+        /*KAMUS*/
         this.rowEff = nRow;
         this.colEff = nCol;
         this.mem = new float[nRow][nCol];
+        
+        /*ALGORITMA*/
         for (int i = 0; i <= getLastIdxRow(); i++) {
             for (int j = 0; j <= getLastIdxCol(); j++){
                 setElmt(i, j, 0); 
@@ -40,7 +43,9 @@ public class Matrix {
     }
 
     public Matrix copyMatrix(){
+        /*KAMUS*/
         Matrix mOut = new Matrix(this.rowEff, this.colEff);
+        /*ALGORITMA*/
         for (int i = 0; i <= this.getLastIdxRow(); i++) {
             for (int j = 0; j <= this.getLastIdxCol(); j++) {
                 mOut.setElmt(i, j, this.getElmt(i, j));
