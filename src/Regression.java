@@ -1,10 +1,12 @@
 public class Regression {
     public static void MultipleLinearRegression(Matrix mData, int m, int n){
+        /*KAMUS*/
         Matrix mEq = new Matrix(n+1, n+1);
         Matrix mSol = new Matrix(n+1, 1);
 
         float sum;
 
+        /*ALGORITMA*/
         for (int i = 0; i <= n; i++) {
             for (int j = 0; j <= n; j++) {
                 sum = 0;
@@ -74,12 +76,14 @@ public class Regression {
     }
 
     public static void ReadRegressionData() {
+        /*KAMUS*/
         System.out.printf("Masukkan jumlah variabel x: ", new Object[0]);
         int n = MainScanner.sc.nextInt();
         System.out.printf("Masukkan jumlah sampel data: ", new Object[0]);
         int m = MainScanner.sc.nextInt();
 
         Matrix mInput = new Matrix(m, n + 1);
+        /*ALGORITMA*/
         for (int i = 0; i < m; i++) {
             System.out.printf("Data sampel %d\n", i + 1);
             for (int j = 0; j < n + 1; j++) {
