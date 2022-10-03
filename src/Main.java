@@ -323,7 +323,8 @@ public class Main {
             }
         }
 
-        Interpolation.BicubicInterpolation(mIn, inX, inY);
+        String output = Interpolation.BicubicInterpolation(mIn, inX, inY);
+        SimpanStringKeFile(output);
         BackToMainMenu();
     }
 

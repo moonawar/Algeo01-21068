@@ -94,7 +94,7 @@ public class Interpolation {
         return mData;
     }
 
-    public static void BicubicInterpolation(Matrix m, float inX, float inY){
+    public static String BicubicInterpolation(Matrix m, float inX, float inY){
         Matrix X = new Matrix(16, 16);
         int row = 0;
         for (int y = -1; y <= 2; y++) {
@@ -130,7 +130,11 @@ public class Interpolation {
             }
         }
 
+        String output = "";
         System.out.printf("f(%.4f, %.4f) = %.4f\n", inX, inY, f_xy);
+        output += String.format("f(%.4f, %.4f) = %.4f\n", inX, inY, f_xy);
+
+        return output;
     }
 
     public static Matrix ReadBicubicMatrix() {
