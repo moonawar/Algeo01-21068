@@ -1,5 +1,5 @@
 public class Regression {
-    public static void MultipleLinearRegression(Matrix mData, int m, int n){
+    public static String MultipleLinearRegression(Matrix mData, int m, int n){
         /*KAMUS*/
         Matrix mEq = new Matrix(n+1, n+1);
         Matrix mSol = new Matrix(n+1, 1);
@@ -51,16 +51,21 @@ public class Regression {
         MatrixOperations.displayMatrix(mEq);
 
         Matrix mX = SPLInverse.SPLWithInverse(mEq, mSol, false);
-        
+        String output = "";
+
         System.out.println("Persamaan regresi:");
         System.out.printf("f(x) = ");
+        output += "f(x) = ";
         for (int i = 0; i <= n; i++) {
             if (i == 0) {
                 System.out.printf("%.4f + ", mX.getElmt(i, 0));
+                output += String.format("%.4f + ", mX.getElmt(i, 0));
             } else {
                 System.out.printf("%.4fx%d", mX.getElmt(i, 0), i);
+                output += String.format("%.4fx%d", mX.getElmt(i, 0), i);
                 if (i != n) {
                     System.out.printf(" + ");
+                    output += " + ";
                 } 
             }
         }
@@ -73,9 +78,12 @@ public class Regression {
         }
 
         System.out.printf("f(x-k) = %.4f", f_x);
+        output += String.format("\nf(x-k) = %.4f", f_x);
+
+        return output;
     }
 
-    public static void ReadRegressionData() {
+    public static String ReadRegressionData() {
         /*KAMUS*/
         System.out.printf("Masukkan jumlah variabel x: ", new Object[0]);
         int n = MainScanner.sc.nextInt();
@@ -97,6 +105,6 @@ public class Regression {
                 }
             }
         }
-        MultipleLinearRegression(mInput, m, n);
+        return MultipleLinearRegression(mInput, m, n);
     }
 }

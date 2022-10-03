@@ -1,10 +1,8 @@
 public class Interpolation {
-    public static void PolinomInterpolation(Matrix mData){
-        /*KAMUS*/
+    public static String PolinomInterpolation(Matrix mData){
         Matrix mA = new Matrix(mData.rowEff, mData.rowEff);
         Matrix mB = new Matrix(mData.rowEff, 1);
 
-        /*ALGORITMA*/
         for (int i = 0; i < mData.rowEff; i++) {
             for (int j = 0; j < mData.rowEff; j++) {
                 mA.setElmt(i, j, (float) Math.pow(mData.getElmt(i, 0), j));
@@ -15,33 +13,42 @@ public class Interpolation {
         Matrix mX = SPLInverse.SPLWithInverse(mA, mB, false);
 
         boolean isInputting = true;
+        String output = "";
+
+        System.out.printf("\nHasil interpolasi polinom \nf(x) = ");
+        output = output.concat("f(x) = ");
+        for (int i = mX.getLastIdxRow(); i >= 0; i--) {
+            if (i == 0) {
+                System.out.printf("%.4f\n", mX.getElmt(i, 0));
+                output += String.format("%.4f\n", mX.getElmt(i, 0));
+            } else if (i == 1){
+                System.out.printf("%.4fx + ", mX.getElmt(i, 0));
+                output += String.format("%.4fx + ", mX.getElmt(i, 0));
+            } else {
+                System.out.printf("%.4fx^%d + ", mX.getElmt(i, 0), i);
+                output += String.format("%.4fx^%d + ", mX.getElmt(i, 0), i);
+            }
+        }
 
         while (isInputting) {
             System.out.printf("\nMasukkan x yang ingin ditaksir dengan interpolasi polinom: ");
             float e = MainScanner.sc.nextFloat();
-    
-            System.out.printf("\nHasil interpolasi polinom \nf(x) = ");
-            for (int i = mX.getLastIdxRow(); i >= 0; i--) {
-                if (i == 0) {
-                    System.out.printf("%.4f\n", mX.getElmt(i, 0));
-                } else if (i == 1){
-                    System.out.printf("%.4fx + ", mX.getElmt(i, 0));
-                } else {
-                    System.out.printf("%.4fx^%d + ", mX.getElmt(i, 0), i);
-                }
-            }
+            
     
             System.out.printf("f(%.4f) = ", e);
+            output += String.format("f(%.4f) = ", e);
             float sum = 0f;
             for (int i = mX.getLastIdxRow(); i >= 0; i--) {
                 sum += mX.getElmt(i, 0) * (float) Math.pow(e, i);
                 if (i == 0) {
                     System.out.printf("%.4f", mX.getElmt(i, 0) * (float) Math.pow(e, i));
+                    output += String.format("%.4f", mX.getElmt(i, 0) * (float) Math.pow(e, i));
                 } else {
                     System.out.printf("%.4f + ", mX.getElmt(i, 0) * (float) Math.pow(e, i));
                 }
             }
             System.out.printf(" = %.4f\n", sum);
+            output += String.format(" = %.4f\n", sum);
 
 
             System.out.printf("\nApakah anda ingin menaksir x lain? (y/n): ");
@@ -55,18 +62,17 @@ public class Interpolation {
                 isInputting = false;
             } 
         }
+
+        return output;
     }
 
 
     public static Matrix ReadInterpolationData() {
-        /*KAMUS*/
         System.out.printf("\nMasukkan jumlah data poin: ");
         int n = MainScanner.sc.nextInt();
 
         Matrix mData = new Matrix(n, 2);
-        
 
-        /*ALGORITMA*/
         System.out.println("""
             Masukkan masing-masing data poin format \"x y\":
             Contoh untuk 3 buah data poin:: 
@@ -89,11 +95,8 @@ public class Interpolation {
     }
 
     public static void BicubicInterpolation(Matrix m, float inX, float inY){
-        /*KAMUS*/
         Matrix X = new Matrix(16, 16);
         int row = 0;
-        
-        /*ALGORITMA*/
         for (int y = -1; y <= 2; y++) {
             for (int x = -1; x <= 2; x++) {
                 int col = 0;
@@ -131,10 +134,7 @@ public class Interpolation {
     }
 
     public static Matrix ReadBicubicMatrix() {
-        /*KAMUS*/
         Matrix m = new Matrix(5, 4);
-        
-        /*ALGORITMA*/
         System.out.printf("""
             Cara input elemen matriks:    
             Input elemen dengan memasukkan baris per baris. Untuk kolom, setiap elemen dipisahkan dengan spasi.    

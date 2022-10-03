@@ -164,4 +164,20 @@ public class Converter {
             e.printStackTrace();
         }
     }
+
+    public static void saveFileString(String path, String str){
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+
+            FileWriter write = new FileWriter(path);
+            write.write(str);
+
+            write.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

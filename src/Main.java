@@ -243,11 +243,13 @@ public class Main {
         }
 
         Matrix mInput;
+        String strOutput;
 
         switch (in) {
             case 1:
                 mInput = Interpolation.ReadInterpolationData();
-                Interpolation.PolinomInterpolation(mInput);
+                strOutput = Interpolation.PolinomInterpolation(mInput);
+                SimpanStringKeFile(strOutput);
                 BackToMainMenu();
                 break;
             case 2:
@@ -255,7 +257,8 @@ public class Main {
                 String path = MainScanner.sc.next();
                 try {
                     mInput = Converter.readTxt(path);
-                    Interpolation.PolinomInterpolation(mInput);
+                    strOutput = Interpolation.PolinomInterpolation(mInput);
+                    SimpanStringKeFile(strOutput);
                 } catch (FileNotFoundException e) {
                     System.out.println("\nFile tidak ditemukan");
                     BackToMainMenu(); break;
@@ -346,10 +349,12 @@ public class Main {
             }
     
             Matrix mInput;
+            String strOutput;
     
             switch (in) {
                 case 1:
-                    Regression.ReadRegressionData();
+                    strOutput = Regression.ReadRegressionData();
+                    SimpanStringKeFile(strOutput);
                     BackToMainMenu();
                     break;
                 case 2:
@@ -357,7 +362,8 @@ public class Main {
                     String path = MainScanner.sc.next();
                     try {
                         mInput = Converter.readTxt(path);
-                        Regression.MultipleLinearRegression(mInput, mInput.rowEff, mInput.colEff - 1);
+                        strOutput = Regression.MultipleLinearRegression(mInput, mInput.rowEff, mInput.colEff - 1);
+                        SimpanStringKeFile(strOutput);
                         BackToMainMenu();
                     } catch (FileNotFoundException e) {
                         System.out.println("\nFile tidak ditemukan");
@@ -504,6 +510,54 @@ public class Main {
             System.out.println("\nMenyimpan file...");
             int lastIdx = sol.listVarMat.length -1;
             Converter.saveFileSPL(path, sol, lastIdx);
+            System.out.println("File berhasil tersimpan (poggers)");
+        } 
+    }
+
+    public static void SimpanMatriksKeFile(Matrix m){
+        System.out.println("\nApakah kamu ingin menyimpan output ke file?\n");
+
+        System.out.printf("Pilih (Pilihan y/n): ");
+        String in = MainScanner.sc.next();
+
+        while (!in.equals("y") && !in.equals("n")) {
+            System.out.printf("\nInput tidak valid. Masukkan kembali: ");
+            in = MainScanner.sc.next();
+        }
+
+        if (in.equals("y")) {
+            System.out.printf("""
+
+                Masukkan nama file (file akan tersimpan pada folder ../test/output/<namafile>.txt):
+                """);
+            String path = "../test/output/" + MainScanner.sc.next();
+
+            System.out.println("\nMenyimpan file...");
+            Converter.saveFileMatrix(path, m);
+            System.out.println("File berhasil tersimpan (poggers)");
+        } 
+    }
+
+    public static void SimpanStringKeFile(String str){
+        System.out.println("\nApakah kamu ingin menyimpan output ke file?\n");
+
+        System.out.printf("Pilih (Pilihan y/n): ");
+        String in = MainScanner.sc.next();
+
+        while (!in.equals("y") && !in.equals("n")) {
+            System.out.printf("\nInput tidak valid. Masukkan kembali: ");
+            in = MainScanner.sc.next();
+        }
+
+        if (in.equals("y")) {
+            System.out.printf("""
+
+                Masukkan nama file (file akan tersimpan pada folder ../test/output/<namafile>.txt):
+                """);
+            String path = "../test/output/" + MainScanner.sc.next();
+
+            System.out.println("\nMenyimpan file...");
+            Converter.saveFileString(path, str);
             System.out.println("File berhasil tersimpan (poggers)");
         } 
     }
