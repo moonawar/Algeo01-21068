@@ -3,14 +3,14 @@ public class DetReduction{
         // mencari determinan dengan metode gauss
         // prekondisi : matriks persegi
         
-        /*Kamus*/
+        /*KAMUS*/
         int i, j, k, temp, indent, swapCounter;
         float pembagi, determinan;
 
         // urutkan baris berdasarkan jumlah 0 sebelum diagonal
         int[] jumlah0 = new int[m.getLastIdxRow() + 1];
         
-        /*Algoritma*/
+        /*ALGORITMA*/
         for (i = 0; i <= m.getLastIdxRow(); ++i) {
             jumlah0[i] = 0;
             j = 0;
