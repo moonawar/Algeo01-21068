@@ -6,6 +6,7 @@ import java.util.Scanner; // Import the Scanner class to read text files
 
 public class Converter {
     public static Matrix readTxt(String filename) throws FileNotFoundException{
+        /* KAMUS */
         int baris, kolom, j, tempASCII;
         int[] size;
         String[] elemen;
@@ -13,6 +14,7 @@ public class Converter {
         char tempchar;
         String temp;
 
+        /* ALGORITMA */
         size = prereadTxt(filename);
 
         m = new Matrix(size[0], size[1]);
@@ -41,6 +43,7 @@ public class Converter {
     }
 
     public static int[] prereadTxt(String filename) throws FileNotFoundException{
+        /* KAMUS */
         int baris, kolom;
         String[] elemen;
         // baris, kolom
@@ -50,6 +53,7 @@ public class Converter {
         File myObj = new File(filename);
         Scanner myReader = new Scanner(myObj);
 
+        /* ALGORITMA */
         baris = 0;
 
         while (myReader.hasNextLine()) {
@@ -69,7 +73,10 @@ public class Converter {
     }
 
     public static Matrix matrixToAugmented (Matrix a, Matrix b) {
+        /* KAMUS */
         Matrix m = new Matrix(a.rowEff, a.colEff + 1);
+
+        /* ALGORITMA */
         for (int i = 0; i <= a.getLastIdxRow(); ++i) {
             for (int j = 0; j <= a.getLastIdxCol() + 1; ++j) {
                 if (j == a.getLastIdxCol() + 1) {
@@ -87,6 +94,7 @@ public class Converter {
         // if (A), maka fungsi mengembalikan A
         // if (!A) maka fungsi mengembalikan B
 
+        /* ALGORITMA */
         if (A) {
             Matrix m1 = new Matrix(m.rowEff, m.colEff - 1);
             for (int i = 0; i <= m1.getLastIdxRow(); i++) {
@@ -105,6 +113,7 @@ public class Converter {
     }
 
     public static void saveFileMatrix(String filename, Matrix m) {
+        /* ALGORITMA */
         try {
             int i, j;
 
@@ -130,6 +139,7 @@ public class Converter {
     }
 
     public static void saveFileSPL(String filename, Solution sol, int lastIdx){
+        /* ALGORITMA */
         try {
             int j;
 

@@ -2,9 +2,11 @@ public class SPLGauss {
     static final float MARK = (float) -99999999999999999999999.9999;
 
     public static void rapihkan(Matrix m) {
+        /* KAMUS */
         // jika ada hasil di matriks yang bernilai -0.0
         int i, j;
 
+        /* ALGORITMA */
         for (i = 0; i <= m.getLastIdxRow(); i++) {
             for (j = 0; j <= m.getLastIdxCol(); j++) {
                 if (m.getElmt(i, j) == -0) {
@@ -15,9 +17,11 @@ public class SPLGauss {
     }
 
     public static void swap(Matrix m ,int i1, int i2) {
+        /* KAMUS */
         int j;
         float temp;
 
+        /* ALGORITMA */
         for (j = 0; j <= m.getLastIdxCol(); ++j) {
             temp = m.getElmt(i1, j);
             m.setElmt(i1, j, m.getElmt(i2, j));
@@ -26,9 +30,11 @@ public class SPLGauss {
     }
 
     public static void gauss(Matrix m) {
+        /* KAMUS */
         int i, j, k, temp, indent;
         float pembagi;
 
+        /* ALGORITMA */
         // urutkan baris berdasarkan jumlah 0 sebelum diagonal
         int[] jumlah0 = new int[m.getLastIdxRow() + 1];
         for (i = 0; i <= m.getLastIdxRow(); ++i) {
@@ -89,9 +95,11 @@ public class SPLGauss {
     }
 
     public static void gaussJordan(Matrix m) {
+        /* KAMUS */
         int i, j, k, indent;
         float pembagi;
     
+        /* ALGORITMA */
         gauss(m);
 
         indent = 0;
@@ -122,8 +130,10 @@ public class SPLGauss {
     }
 
     public static boolean solusiAda(Matrix m) {
+        /* KAMUS */
         int i, j, jumlah0;
         
+        /* ALGORITMA */
         for (i = 0; i <= m.getLastIdxRow(); ++i) {
             jumlah0 = 0;
             for (j = 0; j <= m.getLastIdxCol()-1; ++j) {
@@ -144,9 +154,11 @@ public class SPLGauss {
     }
 
     public static boolean satuSolusi(Matrix m, int i) {
+        /* KAMUS */
         int count = 0;
         int j;
 
+        /* ALGORITMA */
         for (j = 0; j <= m.getLastIdxCol()-1; ++j) {
             if (m.getElmt(i, j) != 0) {
                 ++count;
@@ -160,8 +172,10 @@ public class SPLGauss {
     }
 
     public static boolean solusiBanyak(Matrix m, int i) {
+        /* KAMUS */
         int j, jumlah0;
         
+        /* ALGORITMA */
         jumlah0 = 0;
         for (j = 0; j <= m.getLastIdxCol()-1; ++j) {
             if (m.getElmt(i, j) == 0) {
@@ -180,8 +194,10 @@ public class SPLGauss {
     }
 
     public static int jumlahTidak0(Matrix m, int i) {
+        /* KAMUS */
         int j, jumlahtidak0;
         
+        /* ALGORITMA */
         jumlahtidak0 = 0;
         for (j = 0; j <= m.getLastIdxCol()-1; ++j) {
             if (m.getElmt(i, j) != 0) {
@@ -193,6 +209,7 @@ public class SPLGauss {
     }
 
     public static String pengaliVar(String varString, Float x) {
+        /* KAMUS */
         // ASCII a-z : 97-122
         // ASCII 0-9 : 48-57
         // ASCII . : 46
@@ -202,6 +219,7 @@ public class SPLGauss {
         float ctempfloat;
         char c;
 
+        /* ALGORITMA */
         panjang = varString.length();
         temp = "";
         if (panjang == 1) {
@@ -239,10 +257,12 @@ public class SPLGauss {
     }
 
     public static void rapihkanSPL(Solution sol, int j) {
+        /* KAMUS */
         String temp, temp2;
         int panjang, tempASCII;
         char tempChar;
 
+        /* ALGORITMA */
         for (int i = 0; i <= j; ++i) {
             temp2 = "";
             temp = sol.getVar(i);
@@ -288,6 +308,7 @@ public class SPLGauss {
     }
 
     public static String sederhanakanSPL(String s, int length) {
+        /* KAMUS */
         int i = 0;
         int j;
         int tempASCII;
@@ -302,6 +323,7 @@ public class SPLGauss {
         variableList = new String[length+1];
         String listVar = "abcdefghijklmnopqrstuvwxyz";
 
+        /* ALGORITMA */
         for (j = 0; j <= length; ++j) {
             variableList[j] = listVar.substring(j, j+1);
             equation[j] = 0;
@@ -442,6 +464,7 @@ public class SPLGauss {
     }
 
     public static Solution gaussSPL(Matrix m) {
+        /* KAMUS */
         int i, j, k, count;
         int temp;
         float temp1;
@@ -454,6 +477,7 @@ public class SPLGauss {
         // string untuk parametrik
         String listVar = "abcdefghijklmnopqrstuvwxyz";
         
+        /* ALGORITMA */
         gauss(m);
 
         // cek apakah ada solusi
@@ -555,6 +579,7 @@ public class SPLGauss {
     }
 
     public static Solution gaussJordanSPL(Matrix m) {
+        /* KAMUS */
         int i, j, k, count;
         int temp;
         float temp1;
@@ -567,6 +592,7 @@ public class SPLGauss {
         // string untuk parametrik
         String listVar = "abcdefghijklmnopqrstuvwxyz";
         
+        /* ALGORITMA */
         gaussJordan(m);
 
         // cek apakah ada solusi

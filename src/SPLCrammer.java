@@ -1,8 +1,10 @@
 public class SPLCrammer {
     public static Matrix swapCol(Matrix mB, int kolom, Matrix mA) {
+        /* KAMUS */
         int i, j;
         Matrix temp = mA.copyMatrix();
 
+        /* ALGORITMA */
         for (i = 0; i <= mA.getLastIdxRow(); ++i) {
             for (j = 0; j <= mA.getLastIdxCol(); ++j) {
                 if (j == kolom) {
@@ -17,6 +19,7 @@ public class SPLCrammer {
     }
 
     public static Solution crammerSPL(Matrix m) {
+        /* KAMUS */
         Matrix mA, mB, temp, tempMA;
         int i, j;
         float determinan, determinanAwal;
@@ -26,6 +29,7 @@ public class SPLCrammer {
         Solution sol = new Solution(hasil, listVarMat, state);
         // determinan awal di index m.getLastIdxCol()
 
+        /* ALGORITMA */
         mA = Converter.augmentedToMatrix(m, true);
         mB = Converter.augmentedToMatrix(m, false);
 
