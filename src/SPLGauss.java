@@ -345,6 +345,8 @@ public class SPLGauss {
                 } else if (currentWord.length() == 2 && ((currentWord.charAt(0) == '-' && currentWord.charAt(1) == '+') || currentWord.charAt(0) == '+' && currentWord.charAt(1) == '-')) {
                     ++i;
                     continue;
+                } else if (currentWord.length() == 2 && (currentWord.charAt(0) == '+' && currentWord.charAt(1) == '+')) {
+                    currentWord = "+";
                 } else {
                     if (currentWord.charAt(currentWord.length()-1) != 'd' && currentWord.charAt(currentWord.length()-1) != 'f') {
                         try {
