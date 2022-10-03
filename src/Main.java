@@ -507,29 +507,4 @@ public class Main {
             System.out.println("File berhasil tersimpan (poggers)");
         } 
     }
-
-    public static void SimpanSPLKeFile(Solution sol){
-        System.out.println("\nApakah kamu ingin menyimpan output ke file?\n");
-
-        System.out.printf("Pilih (Pilihan y/n): ");
-        String in = MainScanner.sc.next();
-
-        while (!in.equals("y") && !in.equals("n")) {
-            System.out.printf("\nInput tidak valid. Masukkan kembali: ");
-            in = MainScanner.sc.next();
-        }
-
-        if (in.equals("y")) {
-            System.out.printf("""
-
-                Masukkan nama file (file akan tersimpan pada folder ../test/output/<namafile>.txt):
-                """);
-            String path = "../test/output/" + MainScanner.sc.next();
-
-            System.out.println("\nMenyimpan file...");
-            int lastIdx = sol.listVarMat.length -1;
-            Converter.saveFileSPL(path, sol, lastIdx);
-            System.out.println("File berhasil tersimpan (poggers)");
-        } 
-    }
 }
