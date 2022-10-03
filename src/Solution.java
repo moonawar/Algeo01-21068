@@ -34,6 +34,7 @@ public class Solution {
     }
 
     public static void displaySolution(Solution sol, Matrix m) {
+        /*ALGORITMA*/
         if (sol.getState()) {
             for (int j = 0; j <= m.getLastIdxCol()-1; j++) {
                 System.out.println("x" + (j + 1) + " = " + sol.getVar(j));
